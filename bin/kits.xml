@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<Kits>
+   <Kit rollno="393">
+      <firstname>dinkar</firstname>
+      <lastname>kad</lastname>
+      <nickname>dinkar</nickname>
+      <marks>85</marks>
+   </Kit>
+   
+   <Kit rollno="493">
+      <firstname>Vaneet</firstname>
+      <lastname>Gupta</lastname>
+      <nickname>vinni</nickname>
+      <marks>95</marks>
+   </Kit>
+   <Kit rollno="593">
+      <firstname>jasvir</firstname>
+      <lastname>singn</lastname>
+      <nickname>jazz</nickname>
+      <marks>90</marks>
+   </Kit>
+</Kits>

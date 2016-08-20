@@ -1,0 +1,5 @@
+name: Bevelio
+main: com.bevelio.bevelio.plugin.BevelioPlugin
+author: Sprockbot
+
+version: 0.1

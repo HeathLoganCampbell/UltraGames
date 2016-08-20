@@ -1,0 +1,5 @@
+name: ${project.name}
+main: com.bevelio.bevelio.plugin.BevelioPlugin
+author: Sprockbot
+
+version: ${project.version}
