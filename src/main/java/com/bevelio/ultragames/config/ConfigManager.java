@@ -1,6 +1,5 @@
 package com.bevelio.ultragames.config;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,6 +15,7 @@ import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import com.bevelio.ultragames.core.Spawn;
 import com.bevelio.ultragames.kit.ArmorType;
 import com.bevelio.ultragames.kit.Kit;
 
@@ -24,6 +24,14 @@ public class ConfigManager
 	public ConfigManager()
 	{
 		
+	}
+	
+	public List<Spawn> getSpawns(ConfigurationSection config)
+	{
+		List<Spawn> spawns = new ArrayList<>();
+		
+		
+		return spawns;
 	}
 	
 	public List<Kit> loadKits(ConfigurationSection config)
