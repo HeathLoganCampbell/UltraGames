@@ -242,14 +242,24 @@ public class MatchManager implements Listener
 			match.setWorldData(worldData);
 			
 			
-			File file = new File(worldData.world.getName() + "/kits.yml");
-			System.out.println(file.toString());
-	        ConfigurationSection config = YamlConfiguration.loadConfiguration(file);
+			File kitFile = new File(worldData.world.getName() + "/kits.yml");
+			System.out.println(kitFile.toString());
+	        ConfigurationSection config = YamlConfiguration.loadConfiguration(kitFile);
 	        for(Kit kit : BevelioPlugin.getConfigManager().loadKits(config))
 	        {
 	        	match.addKit(kit);
 	        	System.out.println("Kit loaded " + kit.getName());
 	        }
+	        
+	        File mapFile = new File(worldData.world.getName() + "/Map.yml");
+			System.out.println(mapFile.toString());
+	        config = YamlConfiguration.loadConfiguration(mapFile);
+	        for(Kit kit : BevelioPlugin.getConfigManager().loadKits(config))
+	        {
+	        	match.addKit(kit);
+	        	System.out.println("Kit loaded " + kit.getName());
+	        }
+	        
 		} 
 		catch (InstantiationException | IllegalAccessException e)
 		{

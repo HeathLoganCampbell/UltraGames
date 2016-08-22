@@ -61,6 +61,7 @@ public class Match implements Listener
 	
 	private HashMap<String, Kit>		kits;
 	private HashMap<String, Team> 		teams;
+	private HashMap<String, Spawn>		spawns;
 	
 	public Match(String name, String[] description)
 	{
@@ -69,6 +70,7 @@ public class Match implements Listener
 		
 		this.kits = new HashMap<>();
 		this.teams = new HashMap<>();
+		this.spawns = new HashMap<>();
 	}
 
 	public String getName()
@@ -176,6 +178,16 @@ public class Match implements Listener
 		return bestTeam;
 	}
 	
+	public void addNewSpawn(Spawn spawn)
+	{
+		this.spawns.put(spawn.getName().toLowerCase(), spawn);
+	}
+	
+	public Spawn getSpawn(String name)
+	{
+		return this.spawns.get(name.toLowerCase());
+	}
+	
 	public void spawn(Player player)
 	{
 		Team team = this.getTeam(player);
@@ -184,7 +196,7 @@ public class Match implements Listener
 			return;
 		}
 		player.eject();
-		player.teleport(team.getSpawn().get(0).getSpawn());
+		player.teleport(this.getSpawn(team.getSpawnNames().get(0)).getSpawn());
 		PlayerUtils.reset(player, true);
 		
 		if(team.getDefaultKit() == null)
@@ -233,7 +245,7 @@ public class Match implements Listener
 			}
 			
 			Team team = new Team(name, prefix);
-			team.setSpawn(new Spawn(name + "-Spawn",teamSet.getValue().get(0), "none"));
+			team.setSpawn("");//(new Spawn(name + "-Spawn",teamSet.getValue().get(0), "none"));
 			this.createTeam(team);
 			i++;
 		}

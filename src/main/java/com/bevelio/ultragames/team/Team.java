@@ -6,14 +6,12 @@ import java.util.UUID;
 
 import org.bukkit.ChatColor;
 
-import com.bevelio.ultragames.core.Spawn;
-
 public class Team
 {
 	private String name
 				 , defaultKit;
 	private ChatColor prefix;
-	private List<Spawn> spawns;
+	private List<String> spawns;
 	private List<UUID> members;
 	
 	public Team(String name, ChatColor prefix)
@@ -65,14 +63,19 @@ public class Team
 		return this.members.size();
 	}
 
-	public List<Spawn> getSpawn()
+	public List<String> getSpawnNames()
 	{
 		return spawns;
 	}
 
-	public void setSpawn(Spawn spawn)
+	public void setSpawn(String spawnName)
 	{
-		this.spawns.add(spawn);
+		this.spawns.add(spawnName);
+	}
+	
+	public void addAllSpawns(List<String> spawns)
+	{
+		this.spawns.addAll(spawns);
 	}
 
 	public String getDisplayName()

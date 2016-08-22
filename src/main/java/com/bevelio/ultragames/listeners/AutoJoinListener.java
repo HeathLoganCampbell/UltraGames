@@ -2,6 +2,7 @@ package com.bevelio.ultragames.listeners;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.conversations.Conversation;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -26,7 +27,7 @@ public class AutoJoinListener implements Listener
 	{
 		Player player = e.getPlayer();
 		ItemStack item = e.getItem();
-		
+
 		if(item == null)
 		{
 			return;

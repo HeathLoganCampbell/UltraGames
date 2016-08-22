@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
@@ -18,6 +19,7 @@ import org.bukkit.potion.PotionEffectType;
 import com.bevelio.ultragames.core.Spawn;
 import com.bevelio.ultragames.kit.ArmorType;
 import com.bevelio.ultragames.kit.Kit;
+import com.bevelio.ultragames.team.Team;
 
 public class ConfigManager
 {
@@ -26,12 +28,45 @@ public class ConfigManager
 		
 	}
 	
-	public List<Spawn> getSpawns(ConfigurationSection config)
+	public void loadMap(ConfigurationSection config)
+	{
+		loadMapInfo(config);
+		loadSpawns(config);
+		loadTeams(config);
+	}
+	
+	public void loadMapInfo(ConfigurationSection config)
+	{
+		String mapName = config.getString("Map.Name");
+		String gameType = config.getString("Map.GameType");
+		String version = config.getString("Map.Version");
+		List<String> authors = config.getStringList("Map.Authors");
+	}
+	
+	public List<Spawn> loadSpawns(ConfigurationSection config)
 	{
 		List<Spawn> spawns = new ArrayList<>();
 		
+		for (String spawnName : config.getConfigurationSection("Spawns").getKeys(false)) 
+		{
+			Spawn spawn = this.parseSpawn(config.getConfigurationSection("Spawns." + spawnName));
+	        spawns.add(spawn);
+	    }
 		
 		return spawns;
+	}
+	
+	public List<Team> loadTeams(ConfigurationSection config)
+	{
+		List<Team> teams = new ArrayList<>();
+		
+		for (String teamName : config.getConfigurationSection("Teams").getKeys(false)) 
+		{
+			Team team = this.parseTeam(config.getConfigurationSection("Teams." + teamName));
+			teams.add(team);
+	    }
+		
+		return teams;
 	}
 	
 	public List<Kit> loadKits(ConfigurationSection config)
@@ -175,6 +210,7 @@ public class ConfigManager
 	
 	public Kit parseKit(ConfigurationSection path)
 	{
+		
 		String desc = ChatColor.translateAlternateColorCodes('&', path.getString("Description"));
         String name = path.getString("Name");
         if (name == null)
@@ -209,5 +245,121 @@ public class ConfigManager
         }
        
 		return kit;
+	}
+	
+	public Location parseLocation(ConfigurationSection path)
+	{
+		if(path == null)
+		{
+			return null;
+		}
+		
+		double x = 0;
+		double y = 0;
+		double z = 0;
+		float yaw = 0;
+		float pitch = 0;
+		
+		if(path.contains("X"))
+		{
+			x = path.getDouble("X");
+		}
+		
+		if(path.contains("x"))
+		{
+			x = path.getDouble("x");
+		}
+		
+		if(path.contains("Y"))
+		{
+			y = path.getDouble("Y");
+		}
+		
+		if(path.contains("y"))
+		{
+			y = path.getDouble("y");
+		}
+		
+		if(path.contains("Z"))
+		{
+			z = path.getDouble("Z");
+		}
+		
+		if(path.contains("z"))
+		{
+			z = path.getDouble("z");
+		}
+
+		if(path.contains("yaw"))
+		{
+			yaw = path.getInt("yaw");
+		}
+		
+		if(path.contains("Yaw"))
+		{
+			yaw = path.getInt("Yaw");
+		}
+		
+		if(path.contains("Pitch"))
+		{
+			pitch = path.getInt("Pitch");
+		}
+		
+		if(path.contains("pitch"))
+		{
+			pitch = path.getInt("pitch");
+		}
+		
+		return new Location(null, x, y, z, yaw, pitch);
+	}
+	
+	public Spawn parseSpawn(ConfigurationSection path)
+	{
+        String name = path.getString("Name");
+        if (name == null)
+        {
+            name = path.getName();
+        }
+        name = ChatColor.translateAlternateColorCodes('&', name);
+        String kit = path.getString("Kit");
+        String msg = path.getString("custom-message");
+        Location location = this.parseLocation(path.getConfigurationSection("Location"));
+        
+        Spawn spawn = new Spawn(name, location, kit); 
+        if(msg == null)
+        {
+        	spawn.setCustomMessage(msg);
+        }
+        
+		return spawn;
+	}
+	
+	public Team parseTeam(ConfigurationSection path)
+	{
+        String name = path.getString("Name");
+        if (name == null)
+        {
+            name = path.getName();
+        }
+        name = ChatColor.translateAlternateColorCodes('&', name);
+        
+        String color = path.getString("Color");
+        ChatColor chatColor = null;
+        
+        try
+        {
+        	chatColor = ChatColor.valueOf(color.toUpperCase().replace(" ", "_"));
+        }
+        catch(IllegalArgumentException e)
+        {
+        	System.out.println("Invalid color for team '" + name + "' with the color '" + color + "'");
+        	return new Team(name, ChatColor.WHITE);
+        }
+        
+        List<String> spawnNames = path.getStringList("Spawns");
+        
+        Team team = new Team(name, chatColor);
+        team.addAllSpawns(spawnNames);
+		return team;
 	}
 }

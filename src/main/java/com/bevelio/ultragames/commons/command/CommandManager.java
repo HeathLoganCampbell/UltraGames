@@ -19,10 +19,7 @@ import org.bukkit.command.CommandMap;
  * then calling {@link #registerCommand(String)}.
  * </b>
  * </br>
- * </br>
- * Example found at {@link com.mcsabotage.heart.command.commands.PingCommand}.
- * </br>
- * @author Sprockbot
+ * @author Bevelio
  */
 public class CommandManager {
 	private CommandMap commandMap;
@@ -39,6 +36,10 @@ public class CommandManager {
 		}
 	}
 	
+	/**
+	 * Call to register a command
+	 * @param command
+	 */
 	public void registerCommand(Command command) {
 		commandMap.register(command.getName(), command);
 	}

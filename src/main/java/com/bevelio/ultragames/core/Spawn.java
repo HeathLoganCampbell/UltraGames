@@ -6,7 +6,8 @@ public class Spawn
 {
 	private String name;
 	private Location spawn;
-	private String defaultKit;
+	private String defaultKit
+				 , customMsg;
 	
 	public Spawn(String name, Location spawn, String defaultKit)
 	{
@@ -43,5 +44,13 @@ public class Spawn
 	public void setDefaultKit(String defaultKit)
 	{
 		this.defaultKit = defaultKit;
+	}
+
+	public String getCustomMessage() {
+		return customMsg;
+	}
+
+	public void setCustomMessage(String customMsg) {
+		this.customMsg = customMsg;
 	}
 }
