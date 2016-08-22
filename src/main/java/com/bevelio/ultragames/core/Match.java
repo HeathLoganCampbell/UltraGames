@@ -32,6 +32,9 @@ public class Match implements Listener
 	
 	private Team						winningTeam;
 	
+	public boolean						midGameJoin			= true
+				,						freeForAll			= false;
+	
 	public boolean 						blockBreak 			= true
 				, 						blockPlace 			= true
 				, 						itemDrop 			= true;

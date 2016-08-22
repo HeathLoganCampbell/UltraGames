@@ -9,11 +9,14 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.potion.PotionEffect;
 
+import com.bevelio.ultragames.perks.Perk;
+
 public class Kit
 {
 	private String name;
 	private HashMap<Integer, ItemStack> items, armor;
 	private List<PotionEffect> effects;
+	private List<Perk> perks;
 	
 	public Kit(String name)
 	{
@@ -23,6 +26,7 @@ public class Kit
 		this.armor = new HashMap<>();
 		
 		this.effects = new ArrayList<>();
+		this.perks = new ArrayList<>();
 	}
 
 	public String getName()
@@ -53,6 +57,16 @@ public class Kit
 	public void addEffect(PotionEffect effect)
 	{
 		this.effects.add(effect);
+	}
+	
+	public void addPerk(Perk perk)
+	{
+		this.perks.add(perk);
+	}
+	
+	public boolean hasPerk(Perk perk)
+	{
+		return perk.getName().equalsIgnoreCase(perk.getName());
 	}
 	
 	public void apply(Player player)
