@@ -16,6 +16,7 @@ import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import com.bevelio.ultragames.commons.enchantments.EnchantmentManager;
 import com.bevelio.ultragames.core.Match;
 import com.bevelio.ultragames.core.Spawn;
 import com.bevelio.ultragames.kit.ArmorType;
@@ -39,10 +40,10 @@ public class ConfigManager
 	
 	public void loadMapInfo(ConfigurationSection config, WorldData worlddata)
 	{
-		worlddata.displayName = config.getString("Map.Name");
-		worlddata.gameType = config.getString("Map.GameType");
-		worlddata.version = config.getString("Map.Version");
-		worlddata.authors = config.getStringList("Map.Authors").toString();
+		worlddata.displayName = config.getString("Name");
+		worlddata.gameType = config.getString("GameType");
+		worlddata.version = config.getString("Version");
+		worlddata.authors = config.getStringList("Authors").toString();
 	}
 	
 	public List<Spawn> loadSpawns(ConfigurationSection config)
@@ -145,24 +146,38 @@ public class ConfigManager
 	                        ItemMeta meta = item.getItemMeta();
 	                        List<String> lore = meta.getLore();
 	                        if (lore == null)
-	                            lore = new ArrayList<String>();
+	                        {
+	                        	lore = new ArrayList<String>();
+	                        }
 	                        for (String a : name.split("\\n"))
+	                        {
 	                            lore.add(a);
+	                        }
 	                        meta.setLore(lore);
 	                        item.setItemMeta(meta);
 	                    }
 	                }
-	                for (int n = 0; n < newArgs.length; n++) {
+	                
+	                for (int n = 0; n < newArgs.length; n++)
+	                {
 	                    Enchantment ench = Enchantment.getByName(newArgs[n]);
 	                    if (ench == null)
+	                    {
 	                        ench = Enchantment.getByName(newArgs[n].replace("_", " "));
+	                    }
 	                    if (ench == null)
+	                    {
 	                        ench = Enchantment.getByName(newArgs[n].replace("_", " ").toUpperCase());
+	                    }
 	                    if (ench == null)
+	                    {
 	                        continue;
+	                    }
+	                    System.out.println("New Ench added to an item " + ench.getName());
 	                    item.addUnsafeEnchantment(ench, Integer.parseInt(newArgs[n + 1]));
 	                    n++;
 	                }
+	                item = EnchantmentManager.updateEnchants(item);
 	                amount = amount - 64;
 	                items[i] = item;
 	            }
@@ -188,7 +203,7 @@ public class ConfigManager
 		try 
 		{
 			PotionEffectType potType = isNumeric(args[0]) ? PotionEffectType.getById(Integer.parseInt(args[0])) : PotionEffectType.getByName(args[0].toUpperCase());
-			int seconds = Integer.parseInt(args[1]);
+			int seconds = Integer.parseInt(args[1]) * 20;
 			int lvl = Integer.parseInt(args[2]);
 			boolean hideEffect = false;
 			if(args.length >= 4)
@@ -225,7 +240,7 @@ public class ConfigManager
         kit.setArmor(ArmorType.HELMET, parseItem(path.getString("Helmet"))[0]);
         kit.setArmor(ArmorType.CHESTPLATE, parseItem(path.getString("Chestplate"))[0]);
         kit.setArmor(ArmorType.LEGGINGS, parseItem(path.getString("Leggings"))[0]);
-        kit.setArmor(ArmorType.BOOTS, parseItem(path.getString("Helmet"))[0]);
+        kit.setArmor(ArmorType.BOOTS, parseItem(path.getString("Boots"))[0]);
 
         if(path.contains("Items"))
         {

@@ -1,8 +1,0 @@
-Kits:
-  Basic:
-    Description: ‘Test’
-    Items:
-      1: NETHER_STAR 0 1
-      2: NETHER_STAR 0 2
-    Potions:
-      - SPEED 10 10

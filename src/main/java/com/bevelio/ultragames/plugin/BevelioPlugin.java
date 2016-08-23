@@ -2,11 +2,13 @@ package com.bevelio.ultragames.plugin;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.bevelio.ultragames.commands.JoinCommand;
 import com.bevelio.ultragames.commons.command.CommandManager;
 import com.bevelio.ultragames.commons.damage.DamageManager;
+import com.bevelio.ultragames.commons.enchantments.EnchantmentManager;
 import com.bevelio.ultragames.commons.updater.Updater;
 import com.bevelio.ultragames.config.ConfigManager;
 import com.bevelio.ultragames.core.MatchManager;
@@ -42,6 +44,8 @@ public class BevelioPlugin extends JavaPlugin
 	{
 		new Updater(this);
 		new DamageManager(this);
+
+		EnchantmentManager.isNatural(Enchantment.ARROW_DAMAGE);
 		
 		instance = this;
 		configManager = new ConfigManager();

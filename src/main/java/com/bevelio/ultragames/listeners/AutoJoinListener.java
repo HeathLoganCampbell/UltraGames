@@ -46,6 +46,11 @@ public class AutoJoinListener implements Listener
 		if(e.getAction().name().contains("RIGHT_CLICK"))
 		{
 			Team team = mm.joinMatch(player);
+			if(team == null)
+			{
+				player.sendMessage(ChatColor.RED + "This game has not started yet!");
+				return;
+			}
 			player.sendMessage(ChatColor.GREEN + "You have joinned " + team.getDisplayName() + ChatColor.GREEN + "!");
 		}
 	}

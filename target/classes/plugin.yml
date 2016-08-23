@@ -1,5 +1,5 @@
 name: UltraGames
-main: com.bevelio.bevelio.plugin.BevelioPlugin
+main: com.bevelio.ultragames.plugin.BevelioPlugin
 author: Sprockbot
 
 version: 0.1

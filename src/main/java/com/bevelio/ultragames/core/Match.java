@@ -199,10 +199,13 @@ public class Match implements Listener
 			return;
 		}
 		player.eject();
-		player.teleport(this.getSpawn(team.getSpawnNames().get(0)).getSpawn());
+		String spawnName = team.getSpawnNames().get(0);
+		System.out.println("Spawn ]=> " + spawnName);
+		Spawn spawn = this.getSpawn(spawnName);
+		player.teleport(spawn.getSpawn());
 		PlayerUtils.reset(player, true);
 		
-		if(team.getDefaultKit() == null)
+		if(spawn.getDefaultKit() == null)
 		{
 			player.getInventory().addItem(new ItemStack(Material.STONE_SWORD));
 			player.getInventory().addItem(new ItemStack(Material.STONE_PICKAXE));
@@ -218,7 +221,7 @@ public class Match implements Listener
 		} 
 		else
 		{
-			Kit kit = this.getKit(team.getDefaultKit());
+			Kit kit = this.getKit(spawn.getDefaultKit());
 			if(kit == null)
 			{
 				player.sendMessage(ChatColor.GRAY + "Failed to apply kit " + team.getDefaultKit());
@@ -239,6 +242,13 @@ public class Match implements Listener
 		for(Team team : this.getWorldData().teams)
 		{
 			this.createTeam(team);
+		}
+		
+		for(Spawn spawn : this.getWorldData().spawns)
+		{
+			System.out.println("New Spawn ]=> " + spawn.getName());
+			spawn.getSpawn().setWorld(this.worldData.world);
+			this.addNewSpawn(spawn);
 		}
 		
 		this.onStart();

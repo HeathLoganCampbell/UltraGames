@@ -16,6 +16,7 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
@@ -29,6 +30,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
 import com.bevelio.ultragames.commons.Settings;
+import com.bevelio.ultragames.commons.enchantments.EnchantmentManager;
 import com.bevelio.ultragames.commons.updater.UpdateEvent;
 import com.bevelio.ultragames.commons.updater.UpdateType;
 import com.bevelio.ultragames.commons.utils.PlayerUtils;
@@ -205,6 +207,11 @@ public class MatchManager implements Listener
 		{
 			return null;
 		}
+		
+		if(this.getState() != MatchState.LIVE)
+		{
+			return null;
+		}
 		team.addMember(player.getUniqueId());
 		this.match.spawn(player);
 		this.removeSpectator(player);
@@ -214,48 +221,50 @@ public class MatchManager implements Listener
 	public Match createMatch()
 	{
 		WorldData worldData = this.worldManager.createNewWorld(++this.id);
-		Class<? extends Match> matchClazz = this.getMatchType(worldData.gameType);
-		if(matchClazz == null)
-		{
-			for(int i = 0; i < 6; i++)
-			{
-				System.out.println();
-			}
-			System.out.println("Failed to find the match type '" + worldData.gameType + "' for world '" + worldData.displayName + "'!");
-			if(loadErrors >= 10)
-			{
-				System.out.println("There has been too many errors on the server!");
-				Bukkit.shutdown();
-			}
-			if(this.worldManager.getMatchWorldsSize() > 2)
-			{
-				loadErrors++;
-				return this.createMatch();
-			}
-		}
 		
 		Match match = null;
 		
 		try
 		{
-			match = matchClazz.newInstance();
-			match.setWorldData(worldData);
-			
-			
-			File kitFile = new File(worldData.world.getName() + "/kits.yml");
+	        File mapFile = new File(worldData.world.getName() + "/Map.yml");
+			System.out.println(mapFile.toString());
+			ConfigurationSection config = YamlConfiguration.loadConfiguration(mapFile);
+	        
+	        BevelioPlugin.getConfigManager().loadMap(config, worldData);
+	        
+	        Class<? extends Match> matchClazz = this.getMatchType(worldData.gameType);
+			if(matchClazz == null)
+			{
+				for(int i = 0; i < 6; i++)
+				{
+					System.out.println();
+				}
+				System.out.println("Failed to find the match type '" + worldData.gameType + "' for world '" + worldData.displayName + "'!");
+				if(loadErrors >= 10)
+				{
+					System.out.println("There has been too many errors on the server!");
+					Bukkit.shutdown();
+				}
+				if(this.worldManager.getMatchWorldsSize() > 2)
+				{
+					loadErrors++;
+					return this.createMatch();
+				}
+			}
+	        
+	        match = matchClazz.newInstance();
+	        
+	        
+	        File kitFile = new File(worldData.world.getName() + "/kits.yml");
 			System.out.println(kitFile.toString());
-	        ConfigurationSection config = YamlConfiguration.loadConfiguration(kitFile);
+	        config = YamlConfiguration.loadConfiguration(kitFile);
 	        for(Kit kit : BevelioPlugin.getConfigManager().loadKits(config))
 	        {
 	        	match.addKit(kit);
 	        	System.out.println("Kit loaded " + kit.getName());
 	        }
 	        
-	        File mapFile = new File(worldData.world.getName() + "/Map.yml");
-			System.out.println(mapFile.toString());
-	        config = YamlConfiguration.loadConfiguration(mapFile);
-	        
-	        BevelioPlugin.getConfigManager().loadMap(config, worldData);
+			match.setWorldData(worldData);
 	        
 		} 
 		catch (InstantiationException | IllegalAccessException e)
@@ -426,14 +435,34 @@ public class MatchManager implements Listener
 			{
 				if(item.getType() != Material.AIR)
 				{
-					player.getWorld().dropItem(deathLoc, item).setVelocity(new Vector(0, 0.3, 0));
+					if(item.getEnchantmentLevel(EnchantmentManager.UNLOOTABLE) == 0)
+					{
+						player.getWorld().dropItem(deathLoc, item).setVelocity(new Vector(0, 0.3, 0));
+					}
 				}
 			}
 		}
 		
-		this.getMatch().spawn(player);
+		
 		e.getDrops().clear();
 		e.setDroppedExp(0);
-		e.setDeathMessage(team.getPrefix() + player.getName() + ChatColor.WHITE + " was slain by " + player.getKiller() );
+		if(player.getKiller() != null)
+		{
+			ChatColor killerChatColor = ChatColor.WHITE;
+			Team killerTeam = this.getMatch().getTeam(player.getKiller());
+			if(killerTeam != null)
+			{
+				killerChatColor = killerTeam.getPrefix();
+			}
+			
+			e.setDeathMessage(team.getPrefix() + player.getName() + ChatColor.WHITE + " was slain by " + killerChatColor + player.getKiller() );
+		} 
+		
+		e.setDeathMessage(team.getPrefix() + player.getName() + ChatColor.WHITE + " died!");
+			
+		Bukkit.getScheduler().scheduleSyncDelayedTask(BevelioPlugin.getInstance(), () ->
+		{
+			this.getMatch().spawn(player);
+		}, 1l);
 	}
 }
