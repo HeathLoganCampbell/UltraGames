@@ -6,6 +6,7 @@ import java.util.List;
 import org.bukkit.Location;
 import org.bukkit.World;
 
+import com.bevelio.ultragames.core.Objective;
 import com.bevelio.ultragames.core.Spawn;
 import com.bevelio.ultragames.kit.Kit;
 import com.bevelio.ultragames.team.Team;
@@ -22,6 +23,7 @@ public class WorldData
 	public List<Spawn> spawns;
 	public List<Team> teams;
 	public List<Kit> kits;
+	public List<Objective> objectives;
 	
 	public WorldData(World world)
 	{

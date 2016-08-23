@@ -18,6 +18,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import com.bevelio.ultragames.commons.enchantments.EnchantmentManager;
 import com.bevelio.ultragames.core.Match;
+import com.bevelio.ultragames.core.Objective;
 import com.bevelio.ultragames.core.Spawn;
 import com.bevelio.ultragames.kit.ArmorType;
 import com.bevelio.ultragames.kit.Kit;
@@ -93,6 +94,19 @@ public class ConfigManager
             return false;
         }
         return true;
+    }
+	
+	public int getNumericValue(String str) 
+	{
+        try 
+        {
+           return Integer.parseInt(str);
+        } 
+        catch (NumberFormatException nfe) 
+        {
+           
+        }
+        return 0;
     }
 	
 	 public ItemStack[] parseItem(String string) {
@@ -380,5 +394,48 @@ public class ConfigManager
         Team team = new Team(name, chatColor);
         team.addAllSpawns(spawnNames);
 		return team;
+	}
+	
+	@SuppressWarnings("deprecation")
+	public Objective parseObjective(ConfigurationSection path)
+	{
+		String name = path.getString("Name");
+        if (name == null)
+        {
+            name = path.getName();
+        }
+        
+		String objectiveType = path.getString("ObjectiveType");
+		int radius = path.getInt("Radius");
+		Material material = Material.getMaterial(path.getString("Material").toUpperCase().replace(" ", "_"));
+		if(material == null)
+		{
+			if(this.isNumeric(path.getString("Material")))
+			{
+				material = Material.getMaterial(this.getNumericValue(path.getString("Material")));
+			} 
+			else
+			{
+				material = Material.OBSIDIAN;
+			}
+		}
+		Location location = this.parseLocation(path.getConfigurationSection("Location"));
+		String team = path.getString("Team");
+		boolean gen = true;
+		if(path.contains("Generate"))
+		{
+			gen = Boolean.getBoolean(path.getString("Generate"));
+		}
+		
+		Objective objective = new Objective();
+		objective.name = name;
+		objective.radius = radius;
+		objective.material = material;
+		objective.location = location;
+		objective.objectiveType = objectiveType;
+		objective.teamName = team;
+		objective.active = true;
+		objective.generate = gen;
+		return objective;
 	}
 }

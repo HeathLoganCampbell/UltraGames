@@ -12,6 +12,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
@@ -251,6 +252,14 @@ public class Match implements Listener
 			this.addNewSpawn(spawn);
 		}
 		
+		for(Objective objective : this.getWorldData().objectives)
+		{
+			if(objective.generate)
+			{
+				this.generateObjective(objective);
+			}
+		}
+		
 		this.onStart();
 		this.startingAnnouncement();
 		
@@ -261,5 +270,9 @@ public class Match implements Listener
 		this.winningTeam = winningTeam;
 		this.endingAnnouncement(winningTeam);
 		this.onEnd();
+	}
+	
+	public void generateObjective(Objective objective)
+	{
 	}
 }
