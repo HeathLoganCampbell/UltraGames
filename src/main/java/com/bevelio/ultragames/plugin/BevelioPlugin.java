@@ -1,5 +1,11 @@
 package com.bevelio.ultragames.plugin;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+
+import org.apache.commons.io.IOUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.enchantments.Enchantment;
@@ -44,7 +50,7 @@ public class BevelioPlugin extends JavaPlugin
 	{
 		new Updater(this);
 		new DamageManager(this);
-
+		
 		EnchantmentManager.isNatural(Enchantment.ARROW_DAMAGE);
 		
 		instance = this;
