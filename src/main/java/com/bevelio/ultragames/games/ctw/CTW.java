@@ -12,6 +12,12 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import com.bevelio.ultragames.core.Match;
 import com.bevelio.ultragames.team.Team;
 
+
+/**
+ * Capture the Wool Minigame
+ * 
+ * @author Bevelio
+ */
 public class CTW extends Match
 {
 	private List<CaptureWoolPoint> woolPoints;
@@ -26,16 +32,7 @@ public class CTW extends Match
 	@Override
 	public void onStart()
 	{
-		this.getWorldData().custom.entrySet().forEach(set ->
-		{
-			for(Team team : this.getAllTeam())
-			{
-				if(set.getKey().contains(team.getName()))//Left_Point%RED
-				{
-					
-				}
-			}
-		});
+		
 	}
 	
 	public DyeColor getColor(int i)

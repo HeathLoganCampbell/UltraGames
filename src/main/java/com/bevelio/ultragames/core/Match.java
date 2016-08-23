@@ -236,21 +236,9 @@ public class Match implements Listener
 	{
 		List<ChatColor> colors = Arrays.asList(new ChatColor[] { ChatColor.BLUE, ChatColor.RED, ChatColor.YELLOW, ChatColor.GREEN, ChatColor.GOLD, ChatColor.DARK_PURPLE});
 		
-		int i = 0;
-		for(Entry<String, ArrayList<Location>> teamSet : this.getWorldData().teams.entrySet())
+		for(Team team : this.getWorldData().teams)
 		{
-			String name = teamSet.getKey();
-			ChatColor prefix = null;
-			
-			if(prefix == null)
-			{
-				prefix = colors.get(i);
-			}
-			
-			Team team = new Team(name, prefix);
-			team.setSpawn("");//(new Spawn(name + "-Spawn",teamSet.getValue().get(0), "none"));
 			this.createTeam(team);
-			i++;
 		}
 		
 		this.onStart();

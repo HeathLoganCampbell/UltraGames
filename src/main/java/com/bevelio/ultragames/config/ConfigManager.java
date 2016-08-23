@@ -16,9 +16,11 @@ import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import com.bevelio.ultragames.core.Match;
 import com.bevelio.ultragames.core.Spawn;
 import com.bevelio.ultragames.kit.ArmorType;
 import com.bevelio.ultragames.kit.Kit;
+import com.bevelio.ultragames.map.WorldData;
 import com.bevelio.ultragames.team.Team;
 
 public class ConfigManager
@@ -28,19 +30,19 @@ public class ConfigManager
 		
 	}
 	
-	public void loadMap(ConfigurationSection config)
+	public void loadMap(ConfigurationSection config, WorldData worlddata)
 	{
-		loadMapInfo(config);
-		loadSpawns(config);
-		loadTeams(config);
+		loadMapInfo(config, worlddata);
+		worlddata.spawns = loadSpawns(config);
+		worlddata.teams = loadTeams(config);
 	}
 	
-	public void loadMapInfo(ConfigurationSection config)
+	public void loadMapInfo(ConfigurationSection config, WorldData worlddata)
 	{
-		String mapName = config.getString("Map.Name");
-		String gameType = config.getString("Map.GameType");
-		String version = config.getString("Map.Version");
-		List<String> authors = config.getStringList("Map.Authors");
+		worlddata.displayName = config.getString("Map.Name");
+		worlddata.gameType = config.getString("Map.GameType");
+		worlddata.version = config.getString("Map.Version");
+		worlddata.authors = config.getStringList("Map.Authors").toString();
 	}
 	
 	public List<Spawn> loadSpawns(ConfigurationSection config)
@@ -81,7 +83,8 @@ public class ConfigManager
 	
 	public boolean isNumeric(String str) 
 	{
-        try {
+        try 
+        {
             Integer.parseInt(str);
         } 
         catch (NumberFormatException nfe) 
@@ -244,6 +247,7 @@ public class ConfigManager
 	        }
         }
        
+        
 		return kit;
 	}
 	

@@ -254,11 +254,8 @@ public class MatchManager implements Listener
 	        File mapFile = new File(worldData.world.getName() + "/Map.yml");
 			System.out.println(mapFile.toString());
 	        config = YamlConfiguration.loadConfiguration(mapFile);
-	        for(Kit kit : BevelioPlugin.getConfigManager().loadKits(config))
-	        {
-	        	match.addKit(kit);
-	        	System.out.println("Kit loaded " + kit.getName());
-	        }
+	        
+	        BevelioPlugin.getConfigManager().loadMap(config, worldData);
 	        
 		} 
 		catch (InstantiationException | IllegalAccessException e)
