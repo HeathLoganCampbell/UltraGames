@@ -10,6 +10,7 @@ import java.util.Map.Entry;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.scoreboard.*;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -32,8 +33,10 @@ public class Match implements Listener
 	private String 						name;
 	private String[] 					description;
 	private WorldData 					worldData;
+	private org.bukkit.scoreboard.Objective matchObjective;
 	
 	private Team						winningTeam;
+	
 	
 	public boolean						midGameJoin			= true
 				,						freeForAll			= false;
@@ -233,6 +236,25 @@ public class Match implements Listener
 			
 			kit.apply(player);
 		}
+		
+		if(this.getScoreboard() != null)
+		{
+			player.setScoreboard(this.getScoreboard().getScoreboard());
+		}
+	}
+	
+	public String toFormateTime()
+	{
+		int time = BevelioPlugin.getMatchManager().getSeconds();
+		int minutes = time / 60;
+		int seconds = time % 60;
+		
+		String minStr = (minutes < 10 ? "0" : "") + minutes;
+		String secStr = (seconds < 10 ? "0" : "") + seconds;
+		
+		String fomatedTime = "[" + minStr + ":" + secStr + "]";
+
+		return fomatedTime;
 	}
 	
 	public List<Objective> getObjectives()
@@ -290,7 +312,6 @@ public class Match implements Listener
 		
 		this.onStart();
 		this.startingAnnouncement();
-		
 	}
 	
 	public List<Team> getRemainingTeams()
@@ -326,5 +347,13 @@ public class Match implements Listener
 	public World getWorld()
 	{
 		return this.getWorldData().world;
+	}
+
+	public org.bukkit.scoreboard.Objective getScoreboard() {
+		return matchObjective;
+	}
+
+	public void setScoreboard(org.bukkit.scoreboard.Objective matchObjective) {
+		this.matchObjective = matchObjective;
 	}
 }

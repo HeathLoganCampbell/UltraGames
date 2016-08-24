@@ -27,12 +27,14 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.server.ServerListPingEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.util.Vector;
 
 import com.bevelio.ultragames.commons.Settings;
 import com.bevelio.ultragames.commons.enchantments.EnchantmentManager;
 import com.bevelio.ultragames.commons.updater.UpdateEvent;
 import com.bevelio.ultragames.commons.updater.UpdateType;
+import com.bevelio.ultragames.commons.utils.MathUtils;
 import com.bevelio.ultragames.commons.utils.PlayerUtils;
 import com.bevelio.ultragames.events.MatchStateChangeEvent;
 import com.bevelio.ultragames.games.ctw.CTW;
@@ -374,10 +376,14 @@ public class MatchManager implements Listener
 					Bukkit.broadcastMessage(ChatColor.GREEN + "Game ending in " + ChatColor.RED + this.getSeconds() + ChatColor.GREEN + " second" + (this.getSeconds() == 1 ? "" : "s") + "!");
 				if(this.getSeconds() <= 1)
 				{
+					this.match.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard().registerNewObjective(this.match.getWorldData().gameType + MathUtils.getRandom(9999), "dummy"));
+					this.match.getScoreboard().setDisplaySlot(DisplaySlot.SIDEBAR);
 					this.match.start();
 				}
 				break;
 			case LIVE:
+			
+				this.match.getScoreboard().setDisplayName(ChatColor.BOLD + this.match.getName() + " " + this.match.toFormateTime());
 				if(this.getSeconds() <= 1)
 				{
 					
@@ -388,6 +394,10 @@ public class MatchManager implements Listener
 					Bukkit.broadcastMessage(ChatColor.GREEN + "Game ending in " + ChatColor.RED + this.getSeconds() + ChatColor.GREEN + " second" + (this.getSeconds() == 1 ? "" : "s") + "!");
 				if(this.getSeconds() <= 1)
 				{
+					if(match.getScoreboard() != null)
+					{
+						match.getScoreboard().unregister();
+					}
 					this.setState(MatchState.WAITING);
 				}
 				break;

@@ -1,14 +1,17 @@
 package com.bevelio.ultragames.games.dtc;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockFromToEvent;
+import org.bukkit.scoreboard.DisplaySlot;
 
 import com.bevelio.ultragames.commons.utils.WorldUtils;
 import com.bevelio.ultragames.core.Match;
 import com.bevelio.ultragames.core.Objective;
+import com.bevelio.ultragames.plugin.BevelioPlugin;
 import com.bevelio.ultragames.team.Team;
 
 /**
@@ -22,6 +25,32 @@ public class DTC extends Match
 	public DTC()
 	{
 		super("DTC", new String[] {});
+	}
+	
+	@Override
+	public void onStart()
+	{
+		updateScoreboard();
+	}
+	
+	public void updateScoreboard()
+	{
+		for(String entry : this.getScoreboard().getScoreboard().getEntries())
+		{
+			this.getScoreboard().getScoreboard().resetScores(entry);
+		}
+		
+		for(int i = 0; i < this.getObjectives().size(); i++)
+		{
+			Objective obj = this.getObjectives().get(i);
+			Team team = this.getTeam(obj.teamName);
+			if(team != null)
+			{//☑ ☒ ☐	
+				String active = ChatColor.GREEN + "✔ ";
+				String deactive = ChatColor.RED + "✘ ";
+				this.getScoreboard().getScore((obj.active ? active :  deactive) + team.getPrefix() + obj.name).setScore(i);
+			}
+		}
 	}
 	
 	@EventHandler
@@ -40,6 +69,7 @@ public class DTC extends Match
 				if(obj.isWithin(block.getLocation()))
 				{
 					obj.active = false;
+					updateScoreboard();
 					if(this.getRemainingTeams().size() <= 1)
 					{
 						this.end(this.getRemainingTeams().get(0));
@@ -47,11 +77,6 @@ public class DTC extends Match
 				}
 			}
 		}
-	}
-	
-	@Override
-	public void onStart()
-	{	
 	}
 	
 	@Override
