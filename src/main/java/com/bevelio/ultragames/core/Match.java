@@ -334,10 +334,19 @@ public class Match implements Listener
 	
 	public void end(Team winningTeam)
 	{
+		if(winningTeam == null)
+		{
+			winningTeam = onTimeUp();
+		}
 		this.winningTeam = winningTeam;
 		BevelioPlugin.getMatchManager().nextGameState();
 		this.endingAnnouncement(winningTeam);
 		this.onEnd();
+	}
+	
+	protected Team onTimeUp()
+	{
+		return null;
 	}
 	
 	protected void generateObjective(Objective objective)
