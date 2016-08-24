@@ -37,6 +37,7 @@ public class ConfigManager
 		loadMapInfo(config, worlddata);
 		worlddata.spawns = loadSpawns(config);
 		worlddata.teams = loadTeams(config);
+		worlddata.objectives = loadObjectives(config);
 	}
 	
 	public void loadMapInfo(ConfigurationSection config, WorldData worlddata)
@@ -71,6 +72,19 @@ public class ConfigManager
 	    }
 		
 		return teams;
+	}
+	
+	public List<Objective> loadObjectives(ConfigurationSection config)
+	{
+		List<Objective> objectives = new ArrayList<>();
+		
+		for (String objectiveName : config.getConfigurationSection("Objectives").getKeys(false)) 
+		{
+			Objective objective = this.parseObjective(config.getConfigurationSection("Objectives." + objectiveName));
+			objectives.add(objective);
+	    }
+		
+		return objectives;
 	}
 	
 	public List<Kit> loadKits(ConfigurationSection config)

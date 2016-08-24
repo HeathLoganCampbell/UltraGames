@@ -2,9 +2,14 @@ package com.bevelio.ultragames.games.dtc;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.block.BlockFromToEvent;
 
+import com.bevelio.ultragames.commons.utils.WorldUtils;
 import com.bevelio.ultragames.core.Match;
 import com.bevelio.ultragames.core.Objective;
+import com.bevelio.ultragames.team.Team;
 
 /**
  * Destroy The Core Minigame
@@ -19,14 +24,38 @@ public class DTC extends Match
 		super("DTC", new String[] {});
 	}
 	
-	@Override
-	public void onStart()
+	@EventHandler
+	public void onLavaFlow(BlockFromToEvent e)
 	{
+		Block block = e.getBlock();
+		if(!this.isLive())
+		{
+			return;
+		}
 		
+		if(!block.getType().isSolid())
+		{
+			for(Objective obj : this.getObjectives())
+			{
+				if(obj.isWithin(block.getLocation()))
+				{
+					obj.active = false;
+					if(this.getRemainingTeams().size() <= 1)
+					{
+						this.end(this.getRemainingTeams().get(0));
+					}
+				}
+			}
+		}
 	}
 	
 	@Override
-	public void generateObjective(Objective objective)
+	public void onStart()
+	{	
+	}
+	
+	@Override
+	protected void generateObjective(Objective objective)
 	{
 		int radius = objective.radius;
 		boolean hollow = true;

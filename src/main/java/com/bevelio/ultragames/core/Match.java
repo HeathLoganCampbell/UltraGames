@@ -12,6 +12,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -23,6 +24,7 @@ import com.bevelio.ultragames.commons.utils.GearUtils;
 import com.bevelio.ultragames.commons.utils.PlayerUtils;
 import com.bevelio.ultragames.kit.Kit;
 import com.bevelio.ultragames.map.WorldData;
+import com.bevelio.ultragames.plugin.BevelioPlugin;
 import com.bevelio.ultragames.team.Team;
 
 public class Match implements Listener
@@ -144,7 +146,7 @@ public class Match implements Listener
 	
 	public Team getTeam(String name)
 	{
-		return this.teams.get(name);
+		return this.teams.get(name.toLowerCase());
 	}
 	
 	public Team getTeam(Player player)
@@ -233,6 +235,28 @@ public class Match implements Listener
 		}
 	}
 	
+	public List<Objective> getObjectives()
+	{
+		return this.getWorldData().objectives;
+	}
+	
+	public Objective getObjective(String name)
+	{
+		for(Objective objective : this.getObjectives())
+		{
+			if(name.equalsIgnoreCase(objective.name))
+			{
+				return objective;
+			}
+		}
+		return null;
+	}
+	
+	public boolean isLive()
+	{
+		return BevelioPlugin.getMatchManager().getState() == MatchState.LIVE;
+	}
+	
 	public void onStart() {}
 	public void onEnd() {}
 	
@@ -252,11 +276,15 @@ public class Match implements Listener
 			this.addNewSpawn(spawn);
 		}
 		
-		for(Objective objective : this.getWorldData().objectives)
+		if(this.getWorldData().objectives != null)
 		{
-			if(objective.generate)
+			for(Objective objective : this.getWorldData().objectives)
 			{
-				this.generateObjective(objective);
+				objective.location.setWorld(this.getWorld());
+				if(objective.generate)
+				{
+					this.generateObjective(objective);
+				}
 			}
 		}
 		
@@ -265,14 +293,38 @@ public class Match implements Listener
 		
 	}
 	
+	public List<Team> getRemainingTeams()
+	{
+		List<Team> teams = new ArrayList<>();
+		
+		for(Objective obj : this.getObjectives())
+		{
+			if(obj.active)
+			{
+				Team team = this.getTeam(obj.teamName);
+				if(team != null)
+				{
+					teams.add(team);
+				}
+			}
+		}
+		return teams;
+	}
+	
 	public void end(Team winningTeam)
 	{
 		this.winningTeam = winningTeam;
+		BevelioPlugin.getMatchManager().nextGameState();
 		this.endingAnnouncement(winningTeam);
 		this.onEnd();
 	}
 	
-	public void generateObjective(Objective objective)
+	protected void generateObjective(Objective objective)
 	{
+	}
+	
+	public World getWorld()
+	{
+		return this.getWorldData().world;
 	}
 }

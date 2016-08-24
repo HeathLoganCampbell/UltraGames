@@ -4,6 +4,7 @@ import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
+import org.bukkit.util.Vector;
 
 public class PlayerUtils
 {
@@ -19,9 +20,15 @@ public class PlayerUtils
 		player.setAllowFlight(false);
 		player.closeInventory();
 		player.eject();
+		player.setVelocity(new Vector(0,0,0));
 		
 		player.getInventory().clear();
 		player.getInventory().setArmorContents(new ItemStack[4]);
+		
+		for(PotionEffect effect : player.getActivePotionEffects())
+		{
+			player.removePotionEffect(effect.getType());
+		}
 	}
 	
 	public static void reset(Player player, boolean setGameMode)
@@ -33,11 +40,6 @@ public class PlayerUtils
 			player.setFlying(false);
 			player.setAllowFlight(false);
 			player.setGameMode(GameMode.SURVIVAL);
-		}
-		
-		for(PotionEffect effect : player.getActivePotionEffects())
-		{
-			player.removePotionEffect(effect.getType());
 		}
 	}
 }
