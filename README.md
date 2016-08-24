@@ -7,6 +7,46 @@ An arcadaic type minigame plugin for spigot and bukkit, Arcade, Cycling, minecra
 1. Team Death Match
 2. Capture The Wool
 
+##Example
+```Java
+public class ExampleGame extends Match
+{
+	
+	public ExampleGame()
+	{
+		super("ExampleGame", new String[] {"This is the description of the game", "..."});
+	}
+	
+	@Override
+	public void onStart() //Is called when the game starts
+	{
+	}
+	
+	//Match implements Listener
+	@EventHandler
+	public void onStick(PlayerInteractEvent e)
+	{
+		Player player = e.getPlayer();
+		Team team = this.getTeam(player);
+		ItemStack item = e.getItem();
+		
+		if(team == null)
+		{
+			return;//Player is not in a team aka are in spectator mode
+		}
+		
+		if(item != null)
+		{
+			if(item.getType() == Material.STICK)
+			{
+				player.sendMessage(ChatColor.GREEN + "You used the stick!! :DD");
+				this.end(team);//Ends the game with the parameter of the team that won
+			}
+		}
+	}
+}
+```
+
 ## Installation
 1. Download the project... You should know how to do this by now.
 2. Import project into eclipse.

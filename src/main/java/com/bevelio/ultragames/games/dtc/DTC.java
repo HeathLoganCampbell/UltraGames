@@ -4,8 +4,12 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Item;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockFromToEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scoreboard.DisplaySlot;
 
 import com.bevelio.ultragames.commons.utils.WorldUtils;
@@ -49,6 +53,23 @@ public class DTC extends Match
 				String active = ChatColor.GREEN + "✔ ";
 				String deactive = ChatColor.RED + "✘ ";
 				this.getScoreboard().getScore((obj.active ? active :  deactive) + team.getPrefix() + obj.name).setScore(i);
+			}
+		}
+	}
+	
+	@EventHandler
+	public void onStick(PlayerInteractEvent e)
+	{
+		Player player = e.getPlayer();
+		Team team = this.getTeam(player);
+		ItemStack item = e.getItem();
+		
+		if(item != null)
+		{
+			if(item.getType() == Material.STICK)
+			{
+				player.sendMessage(ChatColor.GREEN + "You used the stick!! :DD");
+				this.end(team);
 			}
 		}
 	}
