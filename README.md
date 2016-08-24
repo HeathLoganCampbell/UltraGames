@@ -1,5 +1,11 @@
 # UltraGames
 An arcadaic type minigame plugin for spigot and bukkit, Arcade, Cycling, minecraft, minigame, minigames
+##Current Complete Games
+1. Destroy The Core
+
+##Current Planned Games
+1. Team Death Match
+2. Capture The Wool
 
 ## Installation
 1. Download the project... You should know how to do this by now.
