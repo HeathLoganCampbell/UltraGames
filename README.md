@@ -7,9 +7,8 @@ An arcadaic type minigame plugin for spigot and bukkit, Arcade, Cycling, minecra
 3. Run as -> Maven Build.
 4. Get the jar from the target file within the project.
 5. Drop into /plugins in a minecraft bukkit/spigot 1.8 server.
-6. Create a "maps" folder in the base directory of the server.
-7. Drop DemoMap.zip from src/main/resources into "Maps".
-8. Run the server. :D
+6. Run the server AND EVERYTHING IS SET UP. :D
+7. Run the server it again. :D
 
 ## Usage
 This is a game engine for making team based games like such that were on the Overcast Network. (EG Destroy the Core, Team death match and others from other servers)
