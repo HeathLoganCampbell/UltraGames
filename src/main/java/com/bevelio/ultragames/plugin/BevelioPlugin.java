@@ -1,11 +1,25 @@
 package com.bevelio.ultragames.plugin;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.JarURLConnection;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.channels.Channels;
+import java.nio.channels.ReadableByteChannel;
+import java.util.Enumeration;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
+import java.util.jar.JarInputStream;
+import java.util.jar.JarOutputStream;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.enchantments.Enchantment;
@@ -29,6 +43,38 @@ public class BevelioPlugin extends JavaPlugin
 	private static ConfigManager configManager;
 	private static BevelioPlugin instance;
 	
+	public void loadMaps()
+	{
+		File maps = new File("maps");
+		if(maps.exists())
+		{
+			return;
+		}
+		
+		maps.mkdir();
+		new File("matches").mkdir();
+		String url="https://dl.dropboxusercontent.com/s/u6udcrc9fhbk41p/DemoMap.zip?dl=0";
+		String filename="maps/DemoMap.zip";
+
+		try
+		{
+		    URL download=new URL(url);
+		    ReadableByteChannel rbc=Channels.newChannel(download.openStream());
+		    FileOutputStream fileOut = new FileOutputStream(filename);
+		    fileOut.getChannel().transferFrom(rbc, 0, 1 << 24);
+		    fileOut.flush();
+		    fileOut.close();
+		    rbc.close();
+		    
+		    System.out.println("SERVER IS SET UP!!!");
+		    System.out.println("PLEASE RESTART THE SERVER!");
+		    Bukkit.shutdown();
+		}
+		catch(Exception e)
+		{ 
+			e.printStackTrace();
+		}
+	}
 	
 	public void registerCommands()
 	{
@@ -52,6 +98,8 @@ public class BevelioPlugin extends JavaPlugin
 		new DamageManager(this);
 		
 		EnchantmentManager.isNatural(Enchantment.ARROW_DAMAGE);
+		
+		loadMaps();
 		
 		instance = this;
 		configManager = new ConfigManager();
