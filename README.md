@@ -1,5 +1,5 @@
 # UltraGames
-An arcadaic type minigame plugin for spigot and bukkit, Arcade, Cycling, minecraft, minigame, minigames
+An arcadaic type minigame plugin for spigot and bukkit, Arcade, Cycling, minecraft, minigame, minigames like Mineplex, Overcast and Hypixel
 ##Current Complete Games
 1. Destroy The Core
 
