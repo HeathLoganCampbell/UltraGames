@@ -259,7 +259,7 @@ public class MatchManager implements Listener
 	        match = matchClazz.newInstance();
 	        
 	        
-	        File kitFile = new File(worldData.world.getName() + File.separator + "kits.yml");
+	        File kitFile = new File(worldData.world.getName() + File.separator + "Kits.yml");
 			System.out.println(kitFile.toString());
 	        config = YamlConfiguration.loadConfiguration(kitFile);
 	        for(Kit kit : BevelioPlugin.getConfigManager().loadKits(config))
