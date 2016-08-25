@@ -1,5 +1,7 @@
 package com.bevelio.ultragames.games.dtc;
 
+import java.util.Iterator;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -44,32 +46,23 @@ public class DTC extends Match
 			this.getScoreboard().getScoreboard().resetScores(entry);
 		}
 		
-		for(int i = 0; i < this.getObjectives().size(); i++)
+		Iterator<Team> itTeam = this.getAllTeam().iterator();
+		int i = 0;
+		while(itTeam.hasNext())
 		{
-			Objective obj = this.getObjectives().get(i);
-			Team team = this.getTeam(obj.teamName);
-			if(team != null)
-			{//☑ ☒ ☐	
-				String active = ChatColor.GREEN + "✔ ";
-				String deactive = ChatColor.RED + "✘ ";
-				this.getScoreboard().getScore((obj.active ? active :  deactive) + team.getPrefix() + obj.name).setScore(i);
-			}
-		}
-	}
-	
-	@EventHandler
-	public void onStick(PlayerInteractEvent e)
-	{
-		Player player = e.getPlayer();
-		Team team = this.getTeam(player);
-		ItemStack item = e.getItem();
-		
-		if(item != null)
-		{
-			if(item.getType() == Material.STICK)
+			Team team = itTeam.next();
+			this.getScoreboard().getScore(team.getPrefix().toString() + ChatColor.BOLD.toString() + team.getName()).setScore(i++);
+			
+			for(; i < this.getObjectives().size(); i++)
 			{
-				player.sendMessage(ChatColor.GREEN + "You used the stick!! :DD");
-				this.end(team);
+				Objective obj = this.getObjectives().get(i);
+				if(obj.teamName.equalsIgnoreCase(team.getName()))
+				{
+					String indient = "  ";
+					String active = ChatColor.GREEN + "✔ ";
+					String deactive = ChatColor.RED + "✘ ";
+					this.getScoreboard().getScore(indient + (obj.active ? active :  deactive) + team.getPrefix() + obj.name).setScore(i);
+				}
 			}
 		}
 	}

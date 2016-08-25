@@ -332,6 +332,10 @@ public class Match implements Listener
 		return teams;
 	}
 	
+	/**
+	 * Call when the game is finished to declare who won.
+	 * @param winningTeam
+	 */
 	public void end(Team winningTeam)
 	{
 		if(winningTeam == null)

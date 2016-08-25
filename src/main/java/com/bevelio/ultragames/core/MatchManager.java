@@ -70,10 +70,10 @@ public class MatchManager implements Listener
 		
 		this.worldManager = new WorldManager();
 		
-		
 		this.autoJoin = new HashSet<>();
 		this.spectators = new HashSet<>();
 		this.matchtypes = new HashMap<>();
+		
 		
 		this.addMatchType("TDM", TDM.class);
 		this.addMatchType("DTC", DTC.class);

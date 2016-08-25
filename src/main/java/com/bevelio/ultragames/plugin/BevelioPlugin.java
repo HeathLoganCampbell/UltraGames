@@ -43,6 +43,8 @@ public class BevelioPlugin extends JavaPlugin
 	private static ConfigManager configManager;
 	private static BevelioPlugin instance;
 	
+	private static String[] downloadWorlds = {"https://dl.dropboxusercontent.com/s/u6udcrc9fhbk41p/DemoMap.zip?dl=0"};
+	
 	public void loadMaps()
 	{
 		File maps = new File("maps");
@@ -53,18 +55,22 @@ public class BevelioPlugin extends JavaPlugin
 		
 		maps.mkdir();
 		new File("matches").mkdir();
-		String url="https://dl.dropboxusercontent.com/s/u6udcrc9fhbk41p/DemoMap.zip?dl=0";
-		String filename="maps/DemoMap.zip";
+		
 
 		try
 		{
-		    URL download=new URL(url);
-		    ReadableByteChannel rbc=Channels.newChannel(download.openStream());
-		    FileOutputStream fileOut = new FileOutputStream(filename);
-		    fileOut.getChannel().transferFrom(rbc, 0, 1 << 24);
-		    fileOut.flush();
-		    fileOut.close();
-		    rbc.close();
+			for(String fileLoc : downloadWorlds)
+			{
+				String url="fileLoc";
+			    URL download=new URL(url);
+			    String filename="maps/" + download.getFile();
+			    ReadableByteChannel rbc=Channels.newChannel(download.openStream());
+			    FileOutputStream fileOut = new FileOutputStream(filename);
+			    fileOut.getChannel().transferFrom(rbc, 0, 1 << 24);
+			    fileOut.flush();
+			    fileOut.close();
+			    rbc.close();
+			}
 		    
 		    System.out.println("SERVER IS SET UP!!!");
 		    System.out.println("PLEASE RESTART THE SERVER!");

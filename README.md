@@ -11,7 +11,9 @@ An arcadaic type minigame plugin for spigot and bukkit, Arcade, Cycling, minecra
 ```Java
 public class ExampleGame extends Match
 {
-	
+	/*
+	When a map is randomly picked it will be unzipped and exported to 'matches/match_00' then the data in the map.yml is loaded and we get the gametype... Then we create the game based on that gametype. then when the 15 seconds is up for the pregame the method within the game called 'onStart()' is called
+	*/
 	public ExampleGame()
 	{
 		super("ExampleGame", new String[] {"This is the description of the game", "..."});
