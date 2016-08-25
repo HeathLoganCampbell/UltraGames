@@ -24,6 +24,8 @@ import com.bevelio.ultragames.team.Team;
 /**
  * Destroy The Core Minigame
  * 
+ * Note: spawn gariadent that protects the core
+ * 
  * @author Bevelio
  */
 public class DTC extends Match

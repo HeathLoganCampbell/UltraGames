@@ -10,13 +10,20 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.ArrayUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Chunk;
+import org.bukkit.Color;
+import org.bukkit.FireworkEffect;
+import org.bukkit.FireworkEffect.Type;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
@@ -28,6 +35,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.server.ServerListPingEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.util.Vector;
 
@@ -37,6 +45,7 @@ import com.bevelio.ultragames.commons.updater.UpdateEvent;
 import com.bevelio.ultragames.commons.updater.UpdateType;
 import com.bevelio.ultragames.commons.utils.MathUtils;
 import com.bevelio.ultragames.commons.utils.PlayerUtils;
+import com.bevelio.ultragames.commons.utils.WorldUtils;
 import com.bevelio.ultragames.events.MatchStateChangeEvent;
 import com.bevelio.ultragames.games.ctw.CTW;
 import com.bevelio.ultragames.games.dtc.DTC;
@@ -296,6 +305,37 @@ public class MatchManager implements Listener
 		this.leaveAllTeams(player);
 	}
 	
+	public void setLaunchFireworks(Location location, ChatColor chatcolor)
+	{
+		Color color = WorldUtils.translateChatColorToColor(chatcolor);
+		Firework fw = (Firework) location.getWorld().spawnEntity(location, EntityType.FIREWORK);
+        FireworkMeta fwm = fw.getFireworkMeta();
+        
+        Type type = Type.BALL;
+        int ran =  MathUtils.getRandom(4);
+        if(ran == 0)
+        {
+        	type = Type.BALL_LARGE;
+        } 
+        else if(ran == 1)
+        {
+        	type = Type.BURST;
+        }
+        
+        FireworkEffect effect = FireworkEffect.builder()
+        									  .flicker(true)
+        									  .withColor(color)
+        									  .withFade(color)
+        									  .with(type)
+        									  .trail(true)
+        								.build();
+        fwm.addEffect(effect);
+        int rp = MathUtils.getRandom(2) + 1;
+        fwm.setPower(rp);
+        
+        fw.setFireworkMeta(fwm);
+	}
+	
 	@EventHandler
 	public void onPing(ServerListPingEvent e)
 	{
@@ -421,6 +461,19 @@ public class MatchManager implements Listener
 				}
 				break;
 			case FINISHING:
+				if(this.getMatch().getWinningTeam() != null)
+				{
+					ChatColor teamColor = this.getMatch().getWinningTeam().getPrefix();
+					for(Chunk chunk : this.getMatch().getWorld().getLoadedChunks())
+					{
+						for(int i = 0; i < 3; i++)
+						{
+							Block block = chunk.getBlock(MathUtils.getRandom(15), 0, MathUtils.getRandom(15));
+							Location highestBlock = this.getMatch().getWorld().getHighestBlockAt(block.getLocation()).getLocation();
+							this.setLaunchFireworks(highestBlock, teamColor);
+						}
+					}
+				}
 				if(this.seconds < 5 || this.seconds % 5 == 0)
 					Bukkit.broadcastMessage(ChatColor.GREEN + "Game ending in " + ChatColor.RED + this.getSeconds() + ChatColor.GREEN + " second" + (this.getSeconds() == 1 ? "" : "s") + "!");
 				if(this.getSeconds() <= 1)

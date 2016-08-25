@@ -375,4 +375,9 @@ public class Match implements Listener
 	public void setScoreboard(org.bukkit.scoreboard.Objective matchObjective) {
 		this.matchObjective = matchObjective;
 	}
+	
+	public Team getWinningTeam()
+	{
+		return this.winningTeam;
+	}
 }
