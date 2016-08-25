@@ -90,10 +90,16 @@ public class ConfigManager
 	public List<Kit> loadKits(ConfigurationSection config)
 	{
 		List<Kit> kits = new ArrayList<>();
-		for (String kitName : config.getConfigurationSection("Kits").getKeys(false)) {
-	        Kit kit = parseKit(config.getConfigurationSection("Kits." + kitName));
-	        kits.add(kit);
-	    }
+		if(config != null)
+		{
+			if(config.contains("Kits"))
+			{
+				for (String kitName : config.getConfigurationSection("Kits").getKeys(false)) {
+			        Kit kit = parseKit(config.getConfigurationSection("Kits." + kitName));
+			        kits.add(kit);
+			    }
+			}
+		}
 		return kits;
 	}
 	

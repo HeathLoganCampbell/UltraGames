@@ -230,7 +230,7 @@ public class MatchManager implements Listener
 		
 		try
 		{
-	        File mapFile = new File(worldData.world.getName() + "/Map.yml");
+	        File mapFile = new File(worldData.world.getName() + File.separator  + "Map.yml");
 			System.out.println(mapFile.toString());
 			ConfigurationSection config = YamlConfiguration.loadConfiguration(mapFile);
 	        
@@ -259,7 +259,7 @@ public class MatchManager implements Listener
 	        match = matchClazz.newInstance();
 	        
 	        
-	        File kitFile = new File(worldData.world.getName() + "/kits.yml");
+	        File kitFile = new File(worldData.world.getName() + File.separator + "kits.yml");
 			System.out.println(kitFile.toString());
 	        config = YamlConfiguration.loadConfiguration(kitFile);
 	        for(Kit kit : BevelioPlugin.getConfigManager().loadKits(config))
@@ -366,11 +366,11 @@ public class MatchManager implements Listener
 					viewer.showPlayer(player);
 				}
 				player.setGameMode(GameMode.CREATIVE);
-				player.setAllowFlight(true);
-				player.setFlying(true);
 				this.leaveAllTeams(player);
 				this.spectators.add(player.getUniqueId());
 				this.setSpectatorInventory(player);
+				player.setAllowFlight(true);
+				player.setFlying(true);
 			}
 		}
 		

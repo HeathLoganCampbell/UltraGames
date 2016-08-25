@@ -61,9 +61,9 @@ public class BevelioPlugin extends JavaPlugin
 		{
 			for(String fileLoc : downloadWorlds)
 			{
-				String url="fileLoc";
+				String url=fileLoc;
 			    URL download=new URL(url);
-			    String filename="maps/" + download.getFile();
+			    String filename="maps/DemoMap.zip";
 			    ReadableByteChannel rbc=Channels.newChannel(download.openStream());
 			    FileOutputStream fileOut = new FileOutputStream(filename);
 			    fileOut.getChannel().transferFrom(rbc, 0, 1 << 24);
