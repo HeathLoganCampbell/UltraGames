@@ -12,7 +12,7 @@ import org.bukkit.event.Listener;
 
 import com.bevelio.ultragames.commons.damage.CustomDamageEvent;
 
-public class DamageListener implements Listener 
+public class Damage implements Listener 
 {
 	private HashMap<UUID, Long> lastDamage = new HashMap<>();
 	private long damageEclipse = 380;

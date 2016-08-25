@@ -18,12 +18,17 @@ public class Objective
 	
 	public boolean isWithin(Location location)
 	{
+		return this.isWithin(location, this.radius);
+	}
+	
+	public boolean isWithin(Location location, double distance)
+	{
 		if(this.location == null
 				|| location == null)
 		{
 			return false;
 		}
-		return WorldUtils.quickDistance(location, this.location) <= this.radius;
+		return WorldUtils.quickDistance(location, this.location) <= distance;
 	}
 	
 	public boolean isBlock(Material material)

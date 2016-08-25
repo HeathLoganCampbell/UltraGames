@@ -14,6 +14,8 @@ public class Team
 	private List<String> spawns;
 	private List<UUID> members;
 	
+	private org.bukkit.scoreboard.Team bukkitTeam;
+	
 	public Team(String name, ChatColor prefix)
 	{
 		this.name = name;
@@ -91,5 +93,13 @@ public class Team
 	public void setDefaultKit(String defaultKit)
 	{
 		this.defaultKit = defaultKit;
+	}
+
+	public org.bukkit.scoreboard.Team getBukkitTeam() {
+		return bukkitTeam;
+	}
+
+	public void setBukkitTeam(org.bukkit.scoreboard.Team bukkitTeam) {
+		this.bukkitTeam = bukkitTeam;
 	}
 }

@@ -114,6 +114,8 @@ public class Match implements Listener
 	
 	public void startingAnnouncement()
 	{
+		String arcadeLine = ChatColor.BOLD + "###############################";
+		Bukkit.broadcastMessage(arcadeLine);
 		Bukkit.broadcastMessage("");
 		Bukkit.broadcastMessage(ChatColor.BOLD + " " + this.getWorldData().displayName + " (" + this.getName() + ")");
 		Bukkit.broadcastMessage(ChatColor.BOLD + " by " + this.getWorldData().authors );
@@ -123,18 +125,22 @@ public class Match implements Listener
 			Bukkit.broadcastMessage(ChatColor.GRAY + "  " + description);
 		}
 		Bukkit.broadcastMessage("");
+		Bukkit.broadcastMessage(arcadeLine);
 	}
 	
 	public void endingAnnouncement(Team winningTeam)
 	{
+		String arcadeLine = ChatColor.BOLD + "###############################";
+		Bukkit.broadcastMessage(arcadeLine);
 		Bukkit.broadcastMessage("");
-		Bukkit.broadcastMessage(ChatColor.BOLD + " " + winningTeam.getName() + " wins");
+		Bukkit.broadcastMessage(winningTeam.getPrefix().toString() + ChatColor.BOLD.toString() + " " + winningTeam.getName() + " wins");
 		Bukkit.broadcastMessage("");
 		for(String description : this.getDescription())
 		{
 			Bukkit.broadcastMessage(ChatColor.GRAY + "  " + description);
 		}
 		Bukkit.broadcastMessage("");
+		Bukkit.broadcastMessage(arcadeLine);
 	}
 	
 	public void createTeam(Team team)

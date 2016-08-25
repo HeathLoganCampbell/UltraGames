@@ -9,6 +9,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockFromToEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
@@ -30,7 +31,7 @@ public class DTC extends Match
 	
 	public DTC()
 	{
-		super("DTC", new String[] {});
+		super("DTC", new String[] {"Destroy the other teams Core", "By leaking the lava within it", "Last team standing wins!"});
 	}
 	
 	@Override
@@ -47,21 +48,46 @@ public class DTC extends Match
 		}
 		
 		Iterator<Team> itTeam = this.getAllTeam().iterator();
-		int i = 0;
+		int i = 15;
 		while(itTeam.hasNext())
 		{
 			Team team = itTeam.next();
-			this.getScoreboard().getScore(team.getPrefix().toString() + ChatColor.BOLD.toString() + team.getName()).setScore(i++);
+			this.getScoreboard().getScore(team.getPrefix().toString() + ChatColor.BOLD.toString() + team.getName()).setScore(i--);
 			
-			for(; i < this.getObjectives().size(); i++)
+			for(Objective obj : this.getObjectives())
 			{
-				Objective obj = this.getObjectives().get(i);
 				if(obj.teamName.equalsIgnoreCase(team.getName()))
 				{
 					String indient = "  ";
 					String active = ChatColor.GREEN + "✔ ";
 					String deactive = ChatColor.RED + "✘ ";
-					this.getScoreboard().getScore(indient + (obj.active ? active :  deactive) + team.getPrefix() + obj.name).setScore(i);
+					this.getScoreboard().getScore(indient + (obj.active ? active :  deactive) + team.getPrefix() + obj.name).setScore(i--);
+				}
+			}
+		}
+	}
+	
+	@EventHandler
+	public void onCoreBreak(BlockBreakEvent e)
+	{
+		Block block = e.getBlock();
+		Player player = e.getPlayer();
+		if(!this.isLive())
+		{
+			return;
+		}
+		
+		
+		Team playerTeam = this.getTeam(player);
+		for(Objective obj : this.getObjectives())
+		{
+			if(obj.isWithin(block.getLocation()))
+			{
+				Team team = this.getTeam(obj.teamName);
+				if(playerTeam == team)
+				{
+					player.sendMessage(ChatColor.RED + "You cannot leak your own core!");
+					e.setCancelled(true);
 				}
 			}
 		}
@@ -80,7 +106,7 @@ public class DTC extends Match
 		{
 			for(Objective obj : this.getObjectives())
 			{
-				if(obj.isWithin(block.getLocation()))
+				if(obj.isWithin(block.getLocation(), obj.radius))
 				{
 					obj.active = false;
 					updateScoreboard();

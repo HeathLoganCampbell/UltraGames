@@ -29,6 +29,7 @@ public class WorldUtils
 	
 	public static double quickDistance(Location a, Location b)
 	{
+		System.out.println("Distance: " + Math.max(Math.abs(a.getX() - b.getX()), Math.abs(a.getY() - b.getY())));
 		return Math.max(Math.max(Math.abs(a.getX() - b.getX()), Math.abs(a.getY() - b.getY())), Math.abs(a.getZ() - b.getZ()));
 	}
 }

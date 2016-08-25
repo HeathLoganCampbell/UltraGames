@@ -32,10 +32,10 @@ import com.bevelio.ultragames.commons.enchantments.EnchantmentManager;
 import com.bevelio.ultragames.commons.updater.Updater;
 import com.bevelio.ultragames.config.ConfigManager;
 import com.bevelio.ultragames.core.MatchManager;
-import com.bevelio.ultragames.listeners.AutoJoinListener;
-import com.bevelio.ultragames.listeners.BlockListener;
-import com.bevelio.ultragames.listeners.CreatureListener;
-import com.bevelio.ultragames.listeners.DamageListener;
+import com.bevelio.ultragames.listeners.AutoJoin;
+import com.bevelio.ultragames.listeners.BlockDamage;
+import com.bevelio.ultragames.listeners.Creature;
+import com.bevelio.ultragames.listeners.Damage;
 
 public class BevelioPlugin extends JavaPlugin
 {
@@ -82,6 +82,16 @@ public class BevelioPlugin extends JavaPlugin
 		}
 	}
 	
+//  NOT NEEDED
+//	public void loadConfigs()
+//	{
+//		File messagesFile = new File(getDataFolder(), "messages.yml");
+//		if (!messagesFile.exists()) 
+//		{
+//			 this.saveResource("messages.yml", false);
+//		}
+//	}
+	
 	public void registerCommands()
 	{
 		CommandManager cm = new CommandManager();
@@ -90,11 +100,11 @@ public class BevelioPlugin extends JavaPlugin
 	
 	public void registerListener()
 	{
-		Bukkit.getPluginManager().registerEvents(new DamageListener(), this);
+		Bukkit.getPluginManager().registerEvents(new Damage(), this);
 		
-		Bukkit.getPluginManager().registerEvents(new AutoJoinListener(), this);
-		Bukkit.getPluginManager().registerEvents(new BlockListener(), this);
-		Bukkit.getPluginManager().registerEvents(new CreatureListener(), this);
+		Bukkit.getPluginManager().registerEvents(new AutoJoin(), this);
+		Bukkit.getPluginManager().registerEvents(new BlockDamage(), this);
+		Bukkit.getPluginManager().registerEvents(new Creature(), this);
 	}
 	
 	@Override

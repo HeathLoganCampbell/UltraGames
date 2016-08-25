@@ -23,6 +23,7 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.server.ServerListPingEvent;
 import org.bukkit.inventory.Inventory;
@@ -215,6 +216,7 @@ public class MatchManager implements Listener
 			return null;
 		}
 		team.addMember(player.getUniqueId());
+		team.getBukkitTeam().addEntry(player.getName());
 		this.match.spawn(player);
 		this.removeSpectator(player);
 		return team;
@@ -276,14 +278,33 @@ public class MatchManager implements Listener
 		return match;
 	}
 	
+	public void leaveAllTeams(Player player)
+	{
+		for(Team team : this.match.getAllTeam())
+		{
+			if(team.isMember(player.getUniqueId()))
+			{
+				team.removeMember(player.getUniqueId());
+				team.getBukkitTeam().removeEntry(player.getName());
+			}
+		}
+	}
+	
+	public void leaveGame(Player player)
+	{
+		this.removeSpectator(player);
+		this.leaveAllTeams(player);
+	}
 	
 	@EventHandler
 	public void onPing(ServerListPingEvent e)
 	{
-		String MOTD = ChatColor.BOLD + "       Bevelio.com\n";
+		String MOTD = ChatColor.BOLD + "           Bevelio.com\n";
 		if(this.getState() == MatchState.LIVE)
 		{
-			MOTD += ChatColor.DARK_AQUA + "Now Playing ";
+			WorldData worldData = this.getMatch().getWorldData();
+			String matchPlaying = worldData.displayName + " " + worldData.gameType;
+			MOTD += ChatColor.DARK_AQUA + "      Now Playing " + matchPlaying;
 		}
 		e.setMotd(MOTD);
 	}
@@ -308,15 +329,16 @@ public class MatchManager implements Listener
 	{
 		Player player = e.getPlayer();
 		e.setQuitMessage(null);
-		this.removeSpectator(player);
-		for(Team team : this.match.getAllTeam())
-		{
-			if(team.isMember(player.getUniqueId()))
-			{
-				team.removeMember(player.getUniqueId());
-			}
-		}
+		leaveGame(player);
 	}
+	
+	@EventHandler
+	public void onKick(PlayerKickEvent e)
+	{
+		Player player = e.getPlayer();
+		leaveGame(player);
+	}
+	
 	
 	@EventHandler
 	public void onStateChange(MatchStateChangeEvent e)
@@ -344,6 +366,9 @@ public class MatchManager implements Listener
 					viewer.showPlayer(player);
 				}
 				player.setGameMode(GameMode.CREATIVE);
+				player.setAllowFlight(true);
+				player.setFlying(true);
+				this.leaveAllTeams(player);
 				this.spectators.add(player.getUniqueId());
 				this.setSpectatorInventory(player);
 			}
@@ -379,6 +404,12 @@ public class MatchManager implements Listener
 					this.match.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard().registerNewObjective(this.match.getWorldData().gameType + MathUtils.getRandom(9999), "dummy"));
 					this.match.getScoreboard().setDisplaySlot(DisplaySlot.SIDEBAR);
 					this.match.start();
+					for(Team team : this.match.getAllTeam())
+					{
+						org.bukkit.scoreboard.Team bukkitTeam = this.match.getScoreboard().getScoreboard().registerNewTeam(team.getName());
+						bukkitTeam.setPrefix(team.getPrefix().toString());
+						team.setBukkitTeam(bukkitTeam);
+					}
 				}
 				break;
 			case LIVE:

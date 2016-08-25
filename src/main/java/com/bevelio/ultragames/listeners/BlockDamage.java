@@ -12,11 +12,11 @@ import com.bevelio.ultragames.core.Match;
 import com.bevelio.ultragames.core.MatchManager;
 import com.bevelio.ultragames.plugin.BevelioPlugin;
 
-public class BlockListener implements Listener
+public class BlockDamage implements Listener
 {
 	private MatchManager mm;
 	
-	public BlockListener()
+	public BlockDamage()
 	{
 		mm = BevelioPlugin.getMatchManager();
 	}

@@ -16,11 +16,11 @@ import com.bevelio.ultragames.core.Match;
 import com.bevelio.ultragames.core.MatchManager;
 import com.bevelio.ultragames.plugin.BevelioPlugin;
 
-public class CreatureListener implements Listener
+public class Creature implements Listener
 {
 	private MatchManager mm;
 	
-	public CreatureListener()
+	public Creature()
 	{
 		mm = BevelioPlugin.getMatchManager();
 	}

@@ -13,11 +13,11 @@ import com.bevelio.ultragames.core.MatchManager;
 import com.bevelio.ultragames.plugin.BevelioPlugin;
 import com.bevelio.ultragames.team.Team;
 
-public class AutoJoinListener implements Listener
+public class AutoJoin implements Listener
 {
 	private MatchManager mm;
 	
-	public AutoJoinListener()
+	public AutoJoin()
 	{
 		mm = BevelioPlugin.getMatchManager();
 	}
