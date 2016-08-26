@@ -28,6 +28,12 @@ public class JoinCommand extends Command
 		Player player = (Player) sender;
 		if(BevelioPlugin.getMatchManager().getState() != MatchState.LIVE)
 		{
+			if(BevelioPlugin.getMatchManager().getState() == MatchState.STARTING)
+			{
+				BevelioPlugin.getMatchManager().addAutoJoin(player.getUniqueId());
+				player.sendMessage(ChatColor.BOLD + "You have joinned the game!");
+				return true;
+			}
 			sender.sendMessage(ChatColor.RED + "Game has not started.");
 			return false;
 		}

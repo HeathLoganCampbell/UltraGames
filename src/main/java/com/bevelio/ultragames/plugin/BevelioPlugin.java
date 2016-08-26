@@ -26,6 +26,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.bevelio.ultragames.commands.JoinCommand;
+import com.bevelio.ultragames.commands.SpectatorCommand;
 import com.bevelio.ultragames.commons.command.CommandManager;
 import com.bevelio.ultragames.commons.damage.DamageManager;
 import com.bevelio.ultragames.commons.enchantments.EnchantmentManager;
@@ -96,6 +97,7 @@ public class BevelioPlugin extends JavaPlugin
 	{
 		CommandManager cm = new CommandManager();
 		cm.registerCommand(new JoinCommand());
+		cm.registerCommand(new SpectatorCommand());
 	}
 	
 	public void registerListener()

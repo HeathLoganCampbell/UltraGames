@@ -191,6 +191,21 @@ public class MatchManager implements Listener
 		});
 	}
 	
+	public void addAutoJoin(UUID uuid)
+	{
+		autoJoin.add(uuid);
+	}
+	
+	public boolean isAutoJoin(UUID uuid)
+	{
+		return autoJoin.contains(uuid);
+	}
+	
+	public void leaveAutoJoin(UUID uuid)
+	{
+		autoJoin.remove(uuid);
+	}
+	
 	public void removeSpectator(Player player)
 	{
 		this.spectators.remove(player.getUniqueId());
@@ -450,6 +465,15 @@ public class MatchManager implements Listener
 						bukkitTeam.setPrefix(team.getPrefix().toString());
 						team.setBukkitTeam(bukkitTeam);
 					}
+					for(Player player : Bukkit.getOnlinePlayers())
+					{
+						if(this.isAutoJoin(player.getUniqueId()))
+						{
+							Team team = BevelioPlugin.getMatchManager().joinMatch(player);
+							player.sendMessage(ChatColor.GREEN + "You have joinned " + team.getDisplayName() + ChatColor.GREEN + "!");
+						}
+						this.autoJoin.clear();
+					}	
 				}
 				break;
 			case LIVE:
