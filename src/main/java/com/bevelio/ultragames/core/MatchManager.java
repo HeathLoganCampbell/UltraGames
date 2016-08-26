@@ -344,7 +344,7 @@ public class MatchManager implements Listener
 		{
 			WorldData worldData = this.getMatch().getWorldData();
 			String matchPlaying = worldData.displayName + " " + worldData.gameType;
-			MOTD += ChatColor.DARK_AQUA + "      Now Playing " + matchPlaying;
+			MOTD += ChatColor.DARK_AQUA + "        Now Playing " + matchPlaying;
 		}
 		e.setMotd(MOTD);
 	}
@@ -466,7 +466,7 @@ public class MatchManager implements Listener
 					ChatColor teamColor = this.getMatch().getWinningTeam().getPrefix();
 					for(Chunk chunk : this.getMatch().getWorld().getLoadedChunks())
 					{
-						for(int i = 0; i < 3; i++)
+						if(MathUtils.getRandom(10) <= 5)
 						{
 							Block block = chunk.getBlock(MathUtils.getRandom(15), 0, MathUtils.getRandom(15));
 							Location highestBlock = this.getMatch().getWorld().getHighestBlockAt(block.getLocation()).getLocation();
