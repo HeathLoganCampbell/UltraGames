@@ -472,7 +472,6 @@ public class MatchManager implements Listener
 							Team team = BevelioPlugin.getMatchManager().joinMatch(player);
 							player.sendMessage(ChatColor.GREEN + "You have joinned " + team.getDisplayName() + ChatColor.GREEN + "!");
 						}
-						this.autoJoin.clear();
 					}	
 				}
 				break;
