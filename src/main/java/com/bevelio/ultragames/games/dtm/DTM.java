@@ -1,21 +1,14 @@
 package com.bevelio.ultragames.games.dtm;
 
-import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockFromToEvent;
-import org.bukkit.event.block.BlockPlaceEvent;
 
 import com.bevelio.ultragames.core.Match;
 import com.bevelio.ultragames.core.Objective;
@@ -32,7 +25,7 @@ public class DTM extends Match
 	
 	public DTM()
 	{
-		super("DTM", new String[] {"Destroy the other teams Core", "By leaking the lava within it", "Last team standing wins!"});
+		super("DTM", new String[] {"Destroy the other teams Monument", "By leaking the lava within it", "Last team standing wins!"});
 	}
 	
 	@Override
@@ -103,47 +96,16 @@ public class DTM extends Match
 					if(blocksLeft == 0)
 					{
 						obj.active = false;
+						if(this.getRemainingTeams().size() <= 1)
+						{
+							this.end(this.getRemainingTeams().get(0));
+						}
 					}
 					else
 					{
 						Team team = this.getTeam(obj.teamName);
 						Bukkit.broadcastMessage(team.getPrefix().toString() + blocksLeft + " blocks remaining for " + obj.name);
 					}
-				}
-			}
-		}
-	}
-	
-
-	@Override
-	protected void generateObjective(Objective objective)
-	{
-		int radius = objective.radius;
-		boolean hollow = true;
-		   
-		int bx = objective.location.getBlockX();
-		int by = objective.location.getBlockY();
-		int bz = objective.location.getBlockZ();
-	     
-		for(int x = bx - radius; x <= bx + radius; x++) 
-		{
-			for(int y = by - radius; y <= by + radius; y++) 
-			{
-				for(int z = bz - radius; z <= bz + radius; z++) 
-				{
-					double distance = ((bx-x) * (bx-x) + ((bz-z) * (bz-z)) + ((by-y) * (by-y))) + 2.9;
-					if(distance < radius * radius)
-					{
-						if(!(hollow && distance < ((radius - 1) * (radius - 1)))) 
-						{
-							new Location(objective.location.getWorld(), x, y, z).getBlock().setType(objective.material);
-						}
-						else 
-						{
-							new Location(objective.location.getWorld(), x, y, z).getBlock().setType(Material.STATIONARY_LAVA);
-						}
-					}
-	                 
 				}
 			}
 		}
