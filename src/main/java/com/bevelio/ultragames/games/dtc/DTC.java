@@ -6,19 +6,13 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockFromToEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.scoreboard.DisplaySlot;
 
-import com.bevelio.ultragames.commons.utils.WorldUtils;
 import com.bevelio.ultragames.core.Match;
 import com.bevelio.ultragames.core.Objective;
-import com.bevelio.ultragames.plugin.BevelioPlugin;
 import com.bevelio.ultragames.team.Team;
 
 /**

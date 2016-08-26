@@ -4,8 +4,8 @@ import com.bevelio.ultragames.core.Match;
 
 public class Dominate extends Match
 {
-	public Dominate(String name, String[] description) 
+	public Dominate() 
 	{
-		super(name, description);
+		super("Dominate", new String[]{""});
 	}
 }
