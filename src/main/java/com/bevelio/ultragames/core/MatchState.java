@@ -2,7 +2,7 @@ package com.bevelio.ultragames.core;
 
 public enum MatchState 
 {
-	LOADING(-1), WAITING(-1), STARTING(16), LIVE(60 * 5), FINISHING(16), ENDED(-1);
+	LOADING(-1), WAITING(-1), STARTING(9), LIVE(60 * 5), FINISHING(9), ENDED(-1);
 	// WAITING 1s -> STARTING 15s -> LIVE Xs -> FINISHING 15s -> WAITING 1s -> STARTING 15s -> ...
 	private int seconds;
 	
