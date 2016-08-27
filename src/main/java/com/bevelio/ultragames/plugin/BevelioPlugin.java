@@ -27,6 +27,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.bevelio.ultragames.commands.AutoJoinCommand;
 import com.bevelio.ultragames.commands.JoinCommand;
+import com.bevelio.ultragames.commands.NextMatchCommand;
+import com.bevelio.ultragames.commands.SkipCommand;
 import com.bevelio.ultragames.commands.SpectatorCommand;
 import com.bevelio.ultragames.commons.command.CommandManager;
 import com.bevelio.ultragames.commons.damage.DamageManager;
@@ -102,6 +104,8 @@ public class BevelioPlugin extends JavaPlugin
 		cm.registerCommand(new JoinCommand());
 		cm.registerCommand(new SpectatorCommand());
 		cm.registerCommand(new AutoJoinCommand());
+		cm.registerCommand(new NextMatchCommand());
+		cm.registerCommand(new SkipCommand());
 	}
 	
 	public void registerListener()

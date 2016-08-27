@@ -22,10 +22,37 @@ import com.bevelio.ultragames.commons.utils.Decompress;
 
 public class WorldManager
 {	
-	public WorldData createNewWorld(int id)
+	public File getWorld(String worldName)
+	{
+		for(File file : this.fetchWorlds())
+		{
+			if(file.getName().toLowerCase().contains(worldName.toLowerCase()))
+			{
+				return file;
+			}
+		}
+		return null;
+	}
+	
+	public File getRandomWorld()
 	{
 		List<File> worlds = this.fetchWorlds();
-		File selectedWorld = worlds.get(new Random().nextInt(worlds.size()));
+		return worlds.get(new Random().nextInt(worlds.size()));
+	}
+	
+	public WorldData createNewWorld(int id, String worldName)
+	{
+		File selectedWorld = null;
+		if(worldName != null)
+		{
+			selectedWorld = this.getWorld(worldName);
+		}
+		
+		if(selectedWorld == null)
+		{
+			selectedWorld = this.getRandomWorld();
+		}
+		
 		String name = Settings.GAME_WORLD_NAME + id;
 		File worldFile = new File(name);
 		
@@ -85,6 +112,11 @@ public class WorldManager
 		}
 		
 		return worldData;
+	}
+	
+	public WorldData createNewWorld(int id)
+	{
+		return this.createNewWorld(id, null);
 	}
 	
 	public void deleteMatch(int id)

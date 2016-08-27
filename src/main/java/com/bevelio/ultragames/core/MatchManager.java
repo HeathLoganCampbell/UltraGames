@@ -262,9 +262,14 @@ public class MatchManager implements Listener
 		return team;
 	}
 	
-	public Match createMatch()
+	public boolean isValidWorld(String worldName)
 	{
-		WorldData worldData = this.worldManager.createNewWorld(++this.id);
+		return this.worldManager.getWorld(worldName) != null;
+	}
+	
+	public Match createMatch(String worldName)
+	{
+		WorldData worldData = this.worldManager.createNewWorld(++this.id, worldName);
 		
 		Match match = null;
 		
@@ -292,7 +297,7 @@ public class MatchManager implements Listener
 				if(this.worldManager.getMatchWorldsSize() > 2)
 				{
 					loadErrors++;
-					return this.createMatch();
+					return this.createMatch(worldName);
 				}
 			}
 	        
@@ -328,6 +333,11 @@ public class MatchManager implements Listener
 				team.getBukkitTeam().removeEntry(player.getName());
 			}
 		}
+	}
+	
+	public void setNextMatch(Match match)
+	{
+		this.nextMatch = match;
 	}
 	
 	public void leaveGame(Player player)
@@ -416,7 +426,7 @@ public class MatchManager implements Listener
 	{
 		if(e.getTo() == MatchState.FINISHING || e.getFrom() == MatchState.LOADING)
 		{
-			this.nextMatch = createMatch();
+			this.nextMatch = createMatch(null);
 		}
 				
 		if(e.getTo() == MatchState.WAITING)
@@ -427,7 +437,7 @@ public class MatchManager implements Listener
 			this.worldManager.deleteMatch(this.id - 1);
 		}
 		
-		if(e.getTo() == MatchState.FINISHING && e.getFrom() == MatchState.LIVE)
+		if(e.getTo() == MatchState.FINISHING)
 		{
 			HandlerList.unregisterAll(this.match);
 			for(Player player : Bukkit.getOnlinePlayers())
