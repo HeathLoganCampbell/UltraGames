@@ -39,14 +39,16 @@ public class BlockDamage implements Listener
 				e.setCancelled(true);
 			}
 		} 
-			
-		if(game.blockedPlaceables.contains(block.getType())) {
-			e.setCancelled(true);
-			return;
+		else
+		{
+			if(game.blockedPlaceables.contains(block.getType())) {
+				e.setCancelled(true);
+				return;
+			}
+			e.setCancelled(!game.blockPlace);
+			if(game.placeables.contains(block.getType()))
+				e.setCancelled(false);
 		}
-		e.setCancelled(!game.blockPlace);
-		if(game.placeables.contains(block.getType()))
-			e.setCancelled(false);
 	}
 	
 	@EventHandler
@@ -65,14 +67,17 @@ public class BlockDamage implements Listener
 			{
 				e.setCancelled(true);
 			}
-		} 
-		if(game.blockedBreakables.contains(block.getType())) {
-			e.setCancelled(true);
-			return;
 		}
-		e.setCancelled(!game.blockBreak);
-		if(game.breakables.contains(block.getType()))
-			e.setCancelled(false);
+		else 
+		{
+			if(game.blockedBreakables.contains(block.getType())) {
+				e.setCancelled(true);
+				return;
+			}
+			e.setCancelled(!game.blockBreak);
+			if(game.breakables.contains(block.getType()))
+				e.setCancelled(false);
+		}
 	}
 	
 	@EventHandler
@@ -92,15 +97,17 @@ public class BlockDamage implements Listener
 				e.setCancelled(true);
 			}
 		} 
-		
-		if(game.blockedDroppables.contains(item.getType())) {
-			e.setCancelled(true);
-			return;
+		else
+		{
+			if(game.blockedDroppables.contains(item.getType())) {
+				e.setCancelled(true);
+				return;
+			}
+			
+			e.setCancelled(game.itemDrop);
+			
+			if(game.droppables.contains(item.getType()))
+				e.setCancelled(false);
 		}
-		
-		e.setCancelled(game.itemDrop);
-		
-		if(game.droppables.contains(item.getType()))
-			e.setCancelled(false);
 	}
 }

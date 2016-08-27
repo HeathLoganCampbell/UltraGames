@@ -448,6 +448,14 @@ public class MatchManager implements Listener
 		if(e.getTo() == MatchState.LIVE)
 		{
 			Bukkit.getPluginManager().registerEvents(this.match, BevelioPlugin.getInstance());
+			for(Player player : Bukkit.getOnlinePlayers())
+			{
+				if(this.isAutoJoin(player.getUniqueId()))
+				{
+					Team team = BevelioPlugin.getMatchManager().joinMatch(player);
+					player.sendMessage(ChatColor.GREEN + "You have joinned " + team.getDisplayName() + ChatColor.GREEN + "!");
+				}
+			}	
 		}
 	}
 	
@@ -481,14 +489,6 @@ public class MatchManager implements Listener
 						bukkitTeam.setPrefix(team.getPrefix().toString());
 						team.setBukkitTeam(bukkitTeam);
 					}
-					for(Player player : Bukkit.getOnlinePlayers())
-					{
-						if(this.isAutoJoin(player.getUniqueId()))
-						{
-							Team team = BevelioPlugin.getMatchManager().joinMatch(player);
-							player.sendMessage(ChatColor.GREEN + "You have joinned " + team.getDisplayName() + ChatColor.GREEN + "!");
-						}
-					}	
 				}
 				break;
 			case LIVE:

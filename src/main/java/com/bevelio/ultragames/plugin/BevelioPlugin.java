@@ -39,6 +39,7 @@ import com.bevelio.ultragames.listeners.BlockDamage;
 import com.bevelio.ultragames.listeners.Creature;
 import com.bevelio.ultragames.listeners.Damage;
 import com.bevelio.ultragames.listeners.SpectatorDamage;
+import com.bevelio.ultragames.listeners.TeamDamage;
 
 public class BevelioPlugin extends JavaPlugin
 {
@@ -111,6 +112,7 @@ public class BevelioPlugin extends JavaPlugin
 		Bukkit.getPluginManager().registerEvents(new BlockDamage(), this);
 		Bukkit.getPluginManager().registerEvents(new Creature(), this);
 		Bukkit.getPluginManager().registerEvents(new SpectatorDamage(), this);
+		Bukkit.getPluginManager().registerEvents(new TeamDamage(), this);
 	}
 	
 	@Override

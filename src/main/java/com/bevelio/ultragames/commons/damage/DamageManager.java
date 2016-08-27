@@ -426,6 +426,11 @@ public class DamageManager implements Listener
 	          
 	         trajectory.normalize().multiply(knockback);
 	         trajectory.setY((trajectory.getY() + Math.abs(0.4D * knockback) + 0.2));
+	         
+	         if(trajectory.getY() > 0.6)
+	         {
+	        	 trajectory.setY(0.6);
+	         }
 	          
 	         event.getDamagedEntity().setVelocity(trajectory);
 	         event.getDamagedEntity().setFallDistance(0.0f);
