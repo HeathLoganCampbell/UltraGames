@@ -15,7 +15,7 @@ import com.bevelio.ultragames.commons.damage.CustomDamageEvent;
 public class Damage implements Listener 
 {
 	private HashMap<UUID, Long> lastDamage = new HashMap<>();
-	private long damageEclipse = 380;
+	private long damageEclipse = 480;
 	
 	@EventHandler
 	public void onDamage(CustomDamageEvent e)

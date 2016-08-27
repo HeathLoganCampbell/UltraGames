@@ -2,6 +2,8 @@ package com.bevelio.ultragames.core;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.UUID;
@@ -43,6 +45,7 @@ import com.bevelio.ultragames.commons.Settings;
 import com.bevelio.ultragames.commons.enchantments.EnchantmentManager;
 import com.bevelio.ultragames.commons.updater.UpdateEvent;
 import com.bevelio.ultragames.commons.updater.UpdateType;
+import com.bevelio.ultragames.commons.utils.ItemBuilder;
 import com.bevelio.ultragames.commons.utils.MathUtils;
 import com.bevelio.ultragames.commons.utils.PlayerUtils;
 import com.bevelio.ultragames.commons.utils.WorldUtils;
@@ -174,7 +177,17 @@ public class MatchManager implements Listener
 	{
 		PlayerUtils.reset(player, false);
 		Inventory inv = player.getInventory();
-		inv.setItem(0, new ItemStack(Material.SLIME_BALL));
+		
+		ArrayList<String> lore = new ArrayList<>();
+		lore.add("Right click this in your hand");
+		lore.add("to join the current game");
+		
+		inv.setItem(0, new ItemBuilder(Material.SLIME_BALL)
+										.setDisplayName(ChatColor.GREEN.toString() + ChatColor.BOLD + "Click to join!")
+										.setLore(lore)
+					);
+		player.setAllowFlight(true);
+		player.setFlying(true);
 	}
 	
 	public void addSpectator(Player player)
@@ -182,6 +195,7 @@ public class MatchManager implements Listener
 		this.spectators.add(player.getUniqueId());
 		player.setGameMode(GameMode.CREATIVE);
 		this.setSpectatorInventory(player);
+		player.spigot().setCollidesWithEntities(false);
 		Bukkit.getOnlinePlayers().forEach(viewer ->
 		{
 			if(viewer != player && !this.spectators.contains(viewer.getUniqueId()))
@@ -239,6 +253,8 @@ public class MatchManager implements Listener
 		{
 			return null;
 		}
+		
+		player.spigot().setCollidesWithEntities(true);
 		team.addMember(player.getUniqueId());
 		team.getBukkitTeam().addEntry(player.getName());
 		this.match.spawn(player);

@@ -27,6 +27,19 @@ public class BlockDamage implements Listener
 		Match game = mm.getMatch();
 		if(game == null) return;
 		if(block == null) return;
+	
+		if(!mm.isPlaying(e.getPlayer()))
+		{
+			if(e.getPlayer().hasPermission("ultragames.block.place"))
+			{
+				return;
+			}
+			else
+			{
+				e.setCancelled(true);
+			}
+		} 
+			
 		if(game.blockedPlaceables.contains(block.getType())) {
 			e.setCancelled(true);
 			return;
@@ -42,6 +55,17 @@ public class BlockDamage implements Listener
 		Match game = mm.getMatch();
 		if(game == null) return;
 		if(block == null) return;
+		if(!mm.isPlaying(e.getPlayer()))
+		{
+			if(e.getPlayer().hasPermission("ultragames.block.place"))
+			{
+				return;
+			}
+			else
+			{
+				e.setCancelled(true);
+			}
+		} 
 		if(game.blockedBreakables.contains(block.getType())) {
 			e.setCancelled(true);
 			return;
@@ -57,6 +81,17 @@ public class BlockDamage implements Listener
 		Match game = mm.getMatch();
 		if(game == null) return;
 		if(item == null) return;
+		if(!mm.isPlaying(e.getPlayer()))
+		{
+			if(e.getPlayer().hasPermission("ultragames.block.place"))
+			{
+				return;
+			}
+			else
+			{
+				e.setCancelled(true);
+			}
+		} 
 		
 		if(game.blockedDroppables.contains(item.getType())) {
 			e.setCancelled(true);
