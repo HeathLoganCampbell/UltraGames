@@ -78,7 +78,6 @@ public class DamageManager implements Listener
 			projectile.remove();
 		}
 		
-		System.out.println("Entity Damge Event called");
 		callDamageEvent(damagee, damager, projectile, event.getCause(), damage, true, false, false, null, null, preCancel);
 		
 		event.setCancelled(true);
@@ -156,7 +155,6 @@ public class DamageManager implements Listener
 	@EventHandler(priority=EventPriority.LOW)
 	public void CancelDamageEvent(CustomDamageEvent event) 
 	{
-		System.out.println("CALLED CUSTOMMMMMM DAMAGE EVENTTT");
 		if (event.getDamagedEntity().getHealth() <= 0.0D) 
 		{
 			event.setCancelled("0 Health");
@@ -263,7 +261,6 @@ public class DamageManager implements Listener
 	public void finalDamage(CustomDamageEvent event) 
 	{
 		if ((event.isCancelled()) && (event.getDamage() > 0.0D)) return;
-		System.out.println("EVENT CALLED CustOM DAMAGE");
 		this.damage(event);
 		
 		if ((event.getProjectile() != null) && ((event.getProjectile() instanceof Arrow))) 
@@ -313,7 +310,6 @@ public class DamageManager implements Listener
 		player.setHealth(player.getMaxHealth());
 		player.setFallDistance(0);
 		player.setFireTicks(0);
-		System.out.println("YOU JUST DIEDDDDD :DDD");
 	}
 	
 	private void handleDamage(LivingEntity damagee, LivingEntity damager, EntityDamageEvent.DamageCause cause, float damage, boolean ignoreArmor) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException
@@ -324,7 +320,6 @@ public class DamageManager implements Listener
 	    if (damager != null) 
 	      entityDamager = ((CraftLivingEntity) damager).getHandle();
 	    entityDamagee.aG = 1.5F;
-	    System.out.println("HandleDamage called");
 	    if (entityDamagee.noDamageTicks > entityDamagee.maxNoDamageTicks / 2.0F) 
 	    {
 	      if (damage <= entityDamagee.lastDamage) return;
@@ -347,7 +342,6 @@ public class DamageManager implements Listener
 	    	&& ((entityDamager instanceof EntityHuman)))
 	    {
 	    	this.lastDamageByPlayerTime.setInt(entityDamagee, 100);
-	    	System.out.println(lastDamageByPlayerTime);
 	    	entityDamagee.killer = ((EntityHuman)entityDamager);
 	    }
 
