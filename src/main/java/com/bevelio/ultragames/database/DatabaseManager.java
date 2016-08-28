@@ -1,5 +1,8 @@
 package com.bevelio.ultragames.database;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
@@ -35,4 +38,9 @@ public class DatabaseManager
 	{
 		return this.datasource;
 	}
+	
+	public Connection getConnection() throws SQLException 
+	{
+		return this.datasource.getConnection();
+	} 
 }
