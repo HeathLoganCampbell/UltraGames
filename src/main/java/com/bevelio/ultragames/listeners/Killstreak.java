@@ -14,6 +14,8 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.ItemStack;
 
 import com.bevelio.ultragames.core.MatchManager;
+import com.bevelio.ultragames.core.MatchState;
+import com.bevelio.ultragames.events.MatchStateChangeEvent;
 import com.bevelio.ultragames.plugin.BevelioPlugin;
 
 public class Killstreak implements Listener
@@ -28,11 +30,20 @@ public class Killstreak implements Listener
 	}
 	
 	@EventHandler
+	public void onStateChagne(MatchStateChangeEvent e)
+	{
+		if(e.getTo() == MatchState.FINISHING)
+		{
+			this.killstreak.clear();
+		}
+	}
+	
+	@EventHandler
 	public void onDeath(PlayerDeathEvent e)
 	{
 		Player player = e.getEntity();
 		UUID uuid = player.getUniqueId();
-		Location deathLoc = player.getLocation();
+
 		if(mm.getMatch() == null)
 		{
 			return;
@@ -45,7 +56,11 @@ public class Killstreak implements Listener
 		
 		if(this.killstreak.containsKey(uuid))
 		{
-			Bukkit.broadcastMessage(ChatColor.AQUA.toString() + ChatColor.BOLD.toString() + player.getName() + " was shut down at killstreak of " + this.killstreak.get(uuid) + " kills");
+			int killstreak = this.killstreak.get(uuid);
+			if(killstreak >= 3)
+			{
+				Bukkit.broadcastMessage(ChatColor.AQUA.toString() + ChatColor.BOLD.toString() + player.getName() + " was shut down at killstreak of " + this.killstreak.get(uuid) + " kills");
+			}
 			this.killstreak.remove(uuid);
 		}
 		
