@@ -26,7 +26,8 @@ public class Creature implements Listener
 	}
 	
 	@EventHandler
-	public void onMonsterTarget(EntityTargetLivingEntityEvent e) {
+	public void onMonsterTarget(EntityTargetLivingEntityEvent e) 
+	{
 		Match game = mm.getMatch();
 		if(game == null) return;
 		if(e.isCancelled()) return;
@@ -36,9 +37,13 @@ public class Creature implements Listener
 	}
 	
 	@EventHandler(priority=EventPriority.LOW)
-	public void onWorldCreature(CreatureSpawnEvent event) {
+	public void onWorldCreature(CreatureSpawnEvent event) 
+	{
 		Match game = mm.getMatch();
-		if(game == null) return;
+		if(game == null) 
+		{
+			return;
+		}
 
 	    if ((!game.creatureAllow) && (!game.creatureAllowForce))
 	    {

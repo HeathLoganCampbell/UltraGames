@@ -36,6 +36,8 @@ import com.bevelio.ultragames.commons.enchantments.EnchantmentManager;
 import com.bevelio.ultragames.commons.updater.Updater;
 import com.bevelio.ultragames.config.ConfigManager;
 import com.bevelio.ultragames.core.MatchManager;
+import com.bevelio.ultragames.database.DatabaseInfo;
+import com.bevelio.ultragames.database.DatabaseManager;
 import com.bevelio.ultragames.listeners.AutoJoin;
 import com.bevelio.ultragames.listeners.BlockDamage;
 import com.bevelio.ultragames.listeners.Creature;
@@ -47,11 +49,44 @@ import com.bevelio.ultragames.listeners.TeamDamage;
 
 public class BevelioPlugin extends JavaPlugin
 {
+	private DatabaseInfo dbInfo;
+	
 	private static MatchManager matchManager;
 	private static ConfigManager configManager;
+	private static DatabaseManager databaseManager;
 	private static BevelioPlugin instance;
 	
 	private static String[] downloadWorlds = {"https://dl.dropboxusercontent.com/s/u6udcrc9fhbk41p/DemoMap.zip?dl=0"};
+	
+	public DatabaseInfo loadDatabaseInfo()
+	{
+		dbInfo = new DatabaseInfo();
+		if(this.getConfig().contains("database.username"))
+		{
+			dbInfo.username = this.getConfig().getString("database.username");
+		}
+		
+		if(this.getConfig().contains("database.password"))
+		{
+			dbInfo.password = this.getConfig().getString("database.password");
+		}
+		
+		if(this.getConfig().contains("database.ip"))
+		{
+			dbInfo.ip = this.getConfig().getString("database.ip");
+		}
+		
+		if(this.getConfig().contains("database.port"))
+		{
+			dbInfo.port = this.getConfig().getString("database.port");
+		}
+		
+		if(this.getConfig().contains("database.database"))
+		{
+			dbInfo.database = this.getConfig().getString("database.database");
+		}
+		return dbInfo;
+	}
 	
 	public void loadMaps()
 	{
@@ -129,6 +164,8 @@ public class BevelioPlugin extends JavaPlugin
 		new Updater(this);
 		new DamageManager(this);
 		
+		
+		
 		EnchantmentManager.isNatural(Enchantment.ARROW_DAMAGE);
 		
 		loadMaps();
@@ -159,6 +196,16 @@ public class BevelioPlugin extends JavaPlugin
 	public static ConfigManager getConfigManager()
 	{
 		return configManager;
+	}
+	
+	public static DatabaseManager getDatabaseManager()
+	{
+		if(databaseManager == null)
+		{
+			databaseManager = new DatabaseManager(getInstance().loadDatabaseInfo());
+		}
+		
+		return databaseManager;
 	}
 	
 	public static BevelioPlugin getInstance()
