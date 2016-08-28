@@ -22,6 +22,7 @@ import org.bukkit.inventory.meta.LeatherArmorMeta;
 
 import com.bevelio.ultragames.commons.Settings;
 import com.bevelio.ultragames.commons.utils.GearUtils;
+import com.bevelio.ultragames.commons.utils.ItemBuilder;
 import com.bevelio.ultragames.commons.utils.PlayerUtils;
 import com.bevelio.ultragames.kit.Kit;
 import com.bevelio.ultragames.map.WorldData;
@@ -222,7 +223,8 @@ public class Match implements Listener
 			player.getInventory().addItem(new ItemStack(Material.STONE_SWORD));
 			player.getInventory().addItem(new ItemStack(Material.STONE_PICKAXE));
 			player.getInventory().addItem(new ItemStack(Material.BOW));
-			player.getInventory().setItem(9 ,new ItemStack(Material.ARROW, 32));
+			player.getInventory().setItem(9 , new ItemStack(Material.ARROW, 32));
+			player.getInventory().setItem(8 , new ItemBuilder(Material.COMPASS).setDisplayName(ChatColor.WHITE.toString() + ChatColor.BOLD + "Click to point to target!"));
 			
 			ItemStack chestplate = new ItemStack(Material.LEATHER_CHESTPLATE);
 			LeatherArmorMeta im = (LeatherArmorMeta) chestplate.getItemMeta();

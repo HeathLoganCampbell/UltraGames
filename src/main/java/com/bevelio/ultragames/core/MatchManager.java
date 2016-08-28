@@ -598,11 +598,13 @@ public class MatchManager implements Listener
 				killerChatColor = killerTeam.getPrefix();
 			}
 			
-			e.setDeathMessage(team.getPrefix() + player.getName() + ChatColor.WHITE + " was slain by " + killerChatColor + player.getKiller() );
+			e.setDeathMessage(team.getPrefix() + player.getName() + ChatColor.WHITE + " was slain by " + killerChatColor + player.getKiller().getName() );
 		} 
+		else 
+		{
+			e.setDeathMessage(team.getPrefix() + player.getName() + ChatColor.WHITE + " died!");
+		}
 		
-		e.setDeathMessage(team.getPrefix() + player.getName() + ChatColor.WHITE + " died!");
-			
 		Bukkit.getScheduler().scheduleSyncDelayedTask(BevelioPlugin.getInstance(), () ->
 		{
 			this.getMatch().spawn(player);
