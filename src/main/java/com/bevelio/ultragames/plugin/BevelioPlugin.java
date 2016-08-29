@@ -46,6 +46,7 @@ import com.bevelio.ultragames.listeners.Killstreak;
 import com.bevelio.ultragames.listeners.SpectatorDamage;
 import com.bevelio.ultragames.listeners.TargetCompass;
 import com.bevelio.ultragames.listeners.TeamDamage;
+import com.bevelio.ultragames.listeners.database.Death;
 
 public class BevelioPlugin extends JavaPlugin
 {
@@ -156,6 +157,8 @@ public class BevelioPlugin extends JavaPlugin
 		Bukkit.getPluginManager().registerEvents(new TeamDamage(), this);
 		Bukkit.getPluginManager().registerEvents(new Killstreak(), this);
 		Bukkit.getPluginManager().registerEvents(new TargetCompass(), this);
+		
+		Bukkit.getPluginManager().registerEvents(new Death(), this);
 	}
 	
 	@Override
