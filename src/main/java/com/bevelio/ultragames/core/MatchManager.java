@@ -578,7 +578,7 @@ public class MatchManager implements Listener
 			{
 				if(item.getType() != Material.AIR)
 				{
-					if(item.getEnchantmentLevel(EnchantmentManager.UNLOOTABLE) == 0)
+					if(item.getEnchantmentLevel(EnchantmentManager.UNLOOTABLE) == 0 || (!this.match.getWorldData().itemRemoves.contains(item.getType())))
 					{
 						player.getWorld().dropItem(deathLoc, item).setVelocity(new Vector(0, 0.3, 0));
 					}

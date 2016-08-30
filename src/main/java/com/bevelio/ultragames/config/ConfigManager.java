@@ -2,6 +2,7 @@ package com.bevelio.ultragames.config;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 import org.bukkit.ChatColor;
@@ -46,6 +47,26 @@ public class ConfigManager
 		worlddata.gameType = config.getString("GameType");
 		worlddata.version = config.getString("Version");
 		worlddata.authors = config.getStringList("Authors").toString();
+		worlddata.itemRemoves = this.parseMaterials(config);
+	}
+	
+	public HashSet<Material> parseMaterials(ConfigurationSection config)
+	{
+		HashSet<Material> materials = new HashSet<>();
+		if(config.contains("RemoveItems"))
+		{
+			for (String removeItems : config.getStringList("RemoveItems")) 
+			{
+				Material material = Material.getMaterial(removeItems.toUpperCase());
+				if(material == null)
+				{
+					System.out.println("Failed to find '" + removeItems + "' as a material in removeItems");
+					continue;
+				}
+				materials.add(material);
+		    }
+		}
+		return materials;
 	}
 	
 	public List<Spawn> loadSpawns(ConfigurationSection config)

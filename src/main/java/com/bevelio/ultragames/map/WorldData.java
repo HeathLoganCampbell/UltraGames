@@ -1,9 +1,11 @@
 package com.bevelio.ultragames.map;
 
 import java.io.FileNotFoundException;
+import java.util.HashSet;
 import java.util.List;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 
 import com.bevelio.ultragames.core.Objective;
@@ -24,6 +26,7 @@ public class WorldData
 	public List<Team> teams;
 	public List<Kit> kits;
 	public List<Objective> objectives;
+	public HashSet<Material> itemRemoves;
 	
 	public WorldData(World world)
 	{

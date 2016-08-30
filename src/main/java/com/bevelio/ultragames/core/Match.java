@@ -51,7 +51,8 @@ public class Match implements Listener
 						   , 			droppables 			= new HashSet<>()
 						   , 			blockedBreakables 	= new HashSet<>()
 						   , 			blockedPlaceables 	= new HashSet<>()
-						   , 			blockedDroppables 	= new HashSet<>();
+						   , 			blockedDroppables 	= new HashSet<>()
+						   ;
 	
 	public boolean 						chestOnInventory 	= true
 		     				, 			blockInteract 		= true

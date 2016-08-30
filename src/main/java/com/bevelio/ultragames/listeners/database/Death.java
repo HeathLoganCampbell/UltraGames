@@ -1,5 +1,6 @@
 package com.bevelio.ultragames.listeners.database;
 
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,6 +14,5 @@ public class Death implements Listener
 		Player player = e.getEntity();
 		Player killer = player.getKiller();
 		System.out.println(player.getLastDamageCause().toString());
-		
 	}
 }

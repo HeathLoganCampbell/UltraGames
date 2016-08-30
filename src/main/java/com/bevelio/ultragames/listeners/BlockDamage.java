@@ -99,15 +99,16 @@ public class BlockDamage implements Listener
 		} 
 		else
 		{
-			if(game.blockedDroppables.contains(item.getType())) {
-				e.setCancelled(true);
-				return;
+			if(!game.itemDrop)
+			{
+				if(game.blockedDroppables.contains(item.getType())) {
+					e.setCancelled(true);
+					return;
+				}
+				
+				if(game.droppables.contains(item.getType()))
+					e.setCancelled(false);
 			}
-			
-			e.setCancelled(game.itemDrop);
-			
-			if(game.droppables.contains(item.getType()))
-				e.setCancelled(false);
 		}
 	}
 }
