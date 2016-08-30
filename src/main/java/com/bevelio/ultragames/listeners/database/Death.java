@@ -13,6 +13,5 @@ public class Death implements Listener
 	{
 		Player player = e.getEntity();
 		Player killer = player.getKiller();
-		System.out.println(player.getLastDamageCause().toString());
 	}
 }

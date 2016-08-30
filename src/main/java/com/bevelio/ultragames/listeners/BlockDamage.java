@@ -1,12 +1,18 @@
 package com.bevelio.ultragames.listeners;
 
 import org.bukkit.block.Block;
+import org.bukkit.block.Chest;
+import org.bukkit.block.DoubleChest;
 import org.bukkit.entity.Item;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerInventoryEvent;
+import org.bukkit.inventory.Inventory;
 
 import com.bevelio.ultragames.core.Match;
 import com.bevelio.ultragames.core.MatchManager;
@@ -108,6 +114,27 @@ public class BlockDamage implements Listener
 				
 				if(game.droppables.contains(item.getType()))
 					e.setCancelled(false);
+			}
+		}
+	}
+	
+	@EventHandler
+	public void onChest(InventoryClickEvent e) 
+	{
+		Player player = (Player) e.getWhoClicked();
+		Inventory inv = e.getInventory();
+		
+		Match game = mm.getMatch();
+		if(game == null) return;
+		if(player.hasPermission("ultragames.chest.edit"))
+		{
+			return;
+		}
+		if(!mm.isPlaying(player))
+		{
+			if(inv.getHolder() instanceof Chest || inv.getHolder() instanceof DoubleChest)
+			{
+				e.setCancelled(true);
 			}
 		}
 	}
