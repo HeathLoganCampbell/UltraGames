@@ -51,6 +51,13 @@ public class TargetCompass implements Listener
 			return;
 		}
 		
+		if(mm.getMatch().getObjectives() == null 
+				|| mm.getMatch().getObjectives().isEmpty() 
+				|| mm.getMatch().getObjectives().size() == 0)
+		{
+			return;
+		}
+		
 		if(e.getAction().name().contains("RIGHT_CLICK"))
 		{
 			int targetId = 0;
