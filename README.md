@@ -24,13 +24,13 @@ examples of a fully set up worlds can be found at https://github.com/Bevelio/Ult
 To add this map to the rotation drop it into 'maps' found in the base directory (the folder where your spigot/bukkit.jar is) 
 ###Map.yml
 ```
-Name: 'Bridge Wars 2.0'
-GameType: 'DTC'
+Name: 'Bridge Wars 2.0' #Map name
+GameType: 'DTC' #Game type that this map is
 Authors: 
- - 'SeanMe'
+ - 'SeanMe' #Authors of the map
  - 'Iswirda'
-Version: 1.0.1
-RemoveItems:
+Version: 1.0.1 #Version of the map
+RemoveItems: #Items that will not drop if a player dies
  - LEATHER_CHESTPLATE
  - LEATHER_LEGGINGS
  - LEATHER_BOOTS
