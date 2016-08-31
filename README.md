@@ -13,8 +13,14 @@ This is a PGM type plugin... but a bit different
 ##Create an Arena
 After creating a world in single-player you want to get the world fold and create 2 file within it called Map.yml and Kit.yml (Note: the first letters of each file have to be capitalised)
 
-within those files you will paste and edit the follow
-#Map.yml
+after setting up the Map.yml and Kit.yml zip up 
+ - level.dat
+ - Map.yml
+ - Kit.yml
+ - region
+
+examples of a fully set up worlds can be found at https://github.com/Bevelio/UltraGames/tree/master/src/main/resources
+###Map.yml
 ```
 Name: 'Bridge Wars 2.0'
 GameType: 'DTC'
@@ -93,7 +99,7 @@ Objectives:
         yaw: 0
 ```
 
-#Kit.yml
+###Kit.yml
 ```
 Kits:
   Yellow-Kit:
