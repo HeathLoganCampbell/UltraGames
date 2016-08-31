@@ -20,6 +20,8 @@ after setting up the Map.yml and Kit.yml zip up
  - region
 
 examples of a fully set up worlds can be found at https://github.com/Bevelio/UltraGames/tree/master/src/main/resources
+
+To add this map to the rotation drop it into 'maps' found in the base directory (the folder where your spigot/bukkit.jar is) 
 ###Map.yml
 ```
 Name: 'Bridge Wars 2.0'
