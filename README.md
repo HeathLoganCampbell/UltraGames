@@ -10,6 +10,126 @@ This is a PGM type plugin... but a bit different
 1. Team Death Match
 2. Capture The Wool
 
+##Create an Arena
+After creating a world in single-player you want to get the world fold and create 2 file within it called Map.yml and Kit.yml (Note: the first letters of each file have to be capitalised)
+
+within those files you will paste and edit the follow
+#Map.yml
+```
+Name: 'Bridge Wars 2.0'
+GameType: 'DTC'
+Authors: 
+ - 'SeanMe'
+ - 'Iswirda'
+Version: 1.0.1
+RemoveItems:
+ - LEATHER_CHESTPLATE
+ - LEATHER_LEGGINGS
+ - LEATHER_BOOTS
+ - STONE_SWORD
+ - BOW
+ - LOG
+ - COMPASS
+ - DIAMOND_PICKAXE
+
+Spawns:
+  purple-spawn:
+    Name: 'purple-spawn'
+    Kit: Purple-Kit
+    custom-message: ''
+    Location:
+        x: 115
+        y: 44
+        z: 0
+        pitch: 0
+        yaw: 90
+  yellow-spawn:
+    Name: 'yellow-spawn'
+    Kit: Yellow-Kit
+    custom-message: ''
+    Location:
+        x: -194
+        y: 44
+        z: 0
+        pitch: 0
+        yaw: -90
+
+Teams:
+  Purple:
+    Name: 'Purple'
+    Color: 'DARK_PURPLE'
+    Spawns:
+     - 'purple-spawn'
+  Yellow:
+    Name: 'Yellow'
+    Color: 'YELLOW'
+    Spawns:
+     - 'yellow-spawn'
+
+Objectives:
+   Purple-Core:
+     Name: "Purple Core"
+     ObjectiveType: "Core"
+     Radius: 5
+     Material: Obsidian
+     Team: Purple
+     Location:
+        x: 39
+        y: 78
+        z: 1
+        pitch: 0
+        yaw: 0
+   Yellow-Core:
+     Name: "Yellow Core"
+     ObjectiveType: "Core"
+     Radius: 5
+     Material: Obsidian
+     Team: Yellow
+     Location:
+        x: -118
+        y: 78
+        z: 1
+        pitch: 0
+        yaw: 0
+```
+
+#Kit.yml
+```
+Kits:
+  Yellow-Kit:
+    Description: Yellow teams default kit
+    Helmet: GOLD_ORE 0 1 Unlootable 1
+    Chestplate: LEATHER_CHESTPLATE 0 1 Color=255:255:0
+    Leggings: LEATHER_LEGGINGS 0 1 Color=255:255:0
+    Boots: LEATHER_BOOTS 0 1 Color=255:255:0
+    Items:
+      0: STONE_SWORD 0 1 
+      1: DIAMOND_PICKAXE 0 1
+      2: BOW 0 1
+      3: LOG 0 64 
+      8: COMPASS 0 1 
+      9: ARROW 0 32 
+    Potions:
+      - DAMAGE_RESISTANCE 8 2
+      - SPEED 8 2
+  Purple-Kit:
+    Description: Purple teams default kit
+    Helmet: LAPIS_ORE 0 1 Unlootable 1
+    Chestplate: LEATHER_CHESTPLATE 0 1 Color=128:0:128
+    Leggings: LEATHER_LEGGINGS 0 1 Color=128:0:128
+    Boots: LEATHER_BOOTS 0 1 Color=128:0:128 
+    Items:
+      0: STONE_SWORD 0 1 
+      1: DIAMOND_PICKAXE 0 1
+      2: BOW 0 1 
+      3: LOG 0 64
+      8: COMPASS 0 1
+      9: ARROW 0 32 
+    Potions:
+      - DAMAGE_RESISTANCE 8 2
+      - SPEED 8 2
+```
+
 ##Example
 ```Java
 public class ExampleGame extends Match
