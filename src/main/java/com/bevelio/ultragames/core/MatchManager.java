@@ -492,7 +492,7 @@ public class MatchManager implements Listener
 				break;
 			case STARTING:
 				if(this.seconds < 5 || this.seconds % 5 == 0)
-					Bukkit.broadcastMessage(ChatColor.GREEN + "Game ending in " + ChatColor.RED + this.getSeconds() + ChatColor.GREEN + " second" + (this.getSeconds() == 1 ? "" : "s") + "!");
+					Bukkit.broadcastMessage(ChatColor.GREEN + "Game starting in " + ChatColor.RED + this.getSeconds() + ChatColor.GREEN + " second" + (this.getSeconds() == 1 ? "" : "s") + "!");
 				if(this.getSeconds() <= 1)
 				{
 					this.match.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard().registerNewObjective(this.match.getWorldData().gameType + MathUtils.getRandom(9999), "dummy"));
