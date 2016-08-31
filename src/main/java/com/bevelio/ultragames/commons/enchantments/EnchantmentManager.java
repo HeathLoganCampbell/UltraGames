@@ -22,11 +22,13 @@ public class EnchantmentManager
 
     public static Enchantment UNDROPPABLE;
     public static Enchantment UNLOOTABLE;
+  //  public static Enchantment UNPLACEABLE;
 
     static 
     {
         UNLOOTABLE = new Unlootable(getId());
         UNDROPPABLE = new Undroppable(getId());
+     //   UNPLACEABLE = new Unplaceable(getId());
         try 
         {
             Field field = Enchantment.class.getDeclaredField("acceptingNew");
@@ -39,14 +41,17 @@ public class EnchantmentManager
         {
         	Enchantment.registerEnchantment(UNLOOTABLE);
             Enchantment.registerEnchantment(UNDROPPABLE);
+   //         Enchantment.registerEnchantment(UNPLACEABLE);
         } 
         else 
         {
         	UNLOOTABLE = Enchantment.getByName(UNLOOTABLE.getName());
         	UNDROPPABLE = Enchantment.getByName(UNDROPPABLE.getName());
+     //  	UNPLACEABLE = Enchantment.getByName(UNPLACEABLE.getName());
         }
         customEnchants.add(UNLOOTABLE.getId());
         customEnchants.add(UNDROPPABLE.getId());
+     //   customEnchants.add(UNPLACEABLE.getId());
     }
 
     private static int getId() 
@@ -95,7 +100,6 @@ public class EnchantmentManager
         ArrayList<String> enchants = new ArrayList<String>();
         for (Enchantment ench : item.getEnchantments().keySet()) 
         {
-        	System.out.println("ENCH>>" + ench.getName() + " " + ench.getStartLevel());
             if (!isNatural(ench)) 
             {
                 String enchantName = StringUtils.capitalize(ench.getName().toLowerCase());

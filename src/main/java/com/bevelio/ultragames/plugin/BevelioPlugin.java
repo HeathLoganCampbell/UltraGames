@@ -26,10 +26,12 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.bevelio.ultragames.commands.AutoJoinCommand;
+import com.bevelio.ultragames.commands.BroadcastCommand;
 import com.bevelio.ultragames.commands.JoinCommand;
 import com.bevelio.ultragames.commands.NextMatchCommand;
 import com.bevelio.ultragames.commands.SkipCommand;
 import com.bevelio.ultragames.commands.SpectatorCommand;
+import com.bevelio.ultragames.commands.TeamChatCommand;
 import com.bevelio.ultragames.commons.command.CommandManager;
 import com.bevelio.ultragames.commons.damage.DamageManager;
 import com.bevelio.ultragames.commons.enchantments.EnchantmentManager;
@@ -40,6 +42,7 @@ import com.bevelio.ultragames.database.DatabaseInfo;
 import com.bevelio.ultragames.database.DatabaseManager;
 import com.bevelio.ultragames.listeners.AutoJoin;
 import com.bevelio.ultragames.listeners.BlockDamage;
+import com.bevelio.ultragames.listeners.Chat;
 import com.bevelio.ultragames.listeners.Creature;
 import com.bevelio.ultragames.listeners.Damage;
 import com.bevelio.ultragames.listeners.Killstreak;
@@ -144,6 +147,8 @@ public class BevelioPlugin extends JavaPlugin
 		cm.registerCommand(new AutoJoinCommand());
 		cm.registerCommand(new NextMatchCommand());
 		cm.registerCommand(new SkipCommand());
+		cm.registerCommand(new BroadcastCommand());
+		cm.registerCommand(new TeamChatCommand());
 	}
 	
 	public void registerListener()
@@ -157,6 +162,7 @@ public class BevelioPlugin extends JavaPlugin
 		Bukkit.getPluginManager().registerEvents(new TeamDamage(), this);
 		Bukkit.getPluginManager().registerEvents(new Killstreak(), this);
 		Bukkit.getPluginManager().registerEvents(new TargetCompass(), this);
+		Bukkit.getPluginManager().registerEvents(new Chat(), this);
 		
 		Bukkit.getPluginManager().registerEvents(new Death(), this);
 	}

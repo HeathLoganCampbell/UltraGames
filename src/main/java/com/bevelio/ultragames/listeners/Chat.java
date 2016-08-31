@@ -38,7 +38,8 @@ public class Chat implements Listener
 				}
 			}
 		}
-		String resultMessage = prefix + name + ChatColor.WHITE + ": " + message;
+		//String resultMessage = prefix + name + ChatColor.WHITE + "> " + message;
+		String resultMessage = prefix + "<" + ChatColor.WHITE + name + prefix + "> " + ChatColor.WHITE + message;
 		
 		for(Player viewer : Bukkit.getOnlinePlayers())
 		{

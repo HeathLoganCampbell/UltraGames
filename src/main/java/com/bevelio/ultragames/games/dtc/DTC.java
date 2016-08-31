@@ -100,15 +100,19 @@ public class DTC extends Match
 		
 		if(!block.getType().isSolid())
 		{
-			for(Objective obj : this.getObjectives())
+			if(block.getType() == Material.LAVA
+					|| block.getType() == Material.STATIONARY_LAVA)
 			{
-				if(obj.isWithin(block.getLocation(), obj.radius))
+				for(Objective obj : this.getObjectives())
 				{
-					obj.active = false;
-					updateScoreboard();
-					if(this.getRemainingTeams().size() <= 1)
+					if(obj.isWithin(block.getLocation(), obj.radius))
 					{
-						this.end(this.getRemainingTeams().get(0));
+						obj.active = false;
+						updateScoreboard();
+						if(this.getRemainingTeams().size() <= 1)
+						{
+							this.end(this.getRemainingTeams().get(0));
+						}
 					}
 				}
 			}

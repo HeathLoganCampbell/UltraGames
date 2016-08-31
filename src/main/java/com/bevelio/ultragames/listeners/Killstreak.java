@@ -84,10 +84,14 @@ public class Killstreak implements Listener
 			Bukkit.broadcastMessage(ChatColor.AQUA.toString() + ChatColor.BOLD.toString() + killer.getName() + " has a killstreak of " + kills + " kills");
 		}
 		
-		if(kills == 10)
+		switch(kills)
 		{
-			player.sendMessage(ChatColor.GREEN + "You recieved a diamond sword for getting 10 kills in a row!");
-			player.getInventory().addItem(new ItemStack(Material.DIAMOND_SWORD));
+			case 3:
+				player.getInventory().addItem(new ItemStack(Material.IRON_SWORD));
+				break;
+			case 10:
+				player.getInventory().addItem(new ItemStack(Material.DIAMOND_SWORD));
+				break;
 		}
 	}
 }

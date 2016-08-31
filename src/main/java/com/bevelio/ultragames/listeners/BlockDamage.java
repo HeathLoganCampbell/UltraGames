@@ -1,5 +1,7 @@
 package com.bevelio.ultragames.listeners;
 
+import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.block.DoubleChest;
@@ -8,12 +10,20 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockIgniteEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.PigZapEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerBucketEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerInventoryEvent;
+import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
+import com.bevelio.ultragames.commons.enchantments.EnchantmentManager;
 import com.bevelio.ultragames.core.Match;
 import com.bevelio.ultragames.core.MatchManager;
 import com.bevelio.ultragames.plugin.BevelioPlugin;
@@ -33,6 +43,20 @@ public class BlockDamage implements Listener
 		Match game = mm.getMatch();
 		if(game == null) return;
 		if(block == null) return;
+		
+		ItemStack item = e.getItemInHand();
+		if(item != null)
+		{
+			if(item.getType() != Material.AIR)
+			{
+//				if(item.getEnchantmentLevel(EnchantmentManager.UNPLACEABLE) > 0)
+//				{
+//					e.setCancelled(true);
+//					e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.ANVIL_BREAK, 0.8f, 0.9f);
+//					return;
+//				}
+			}
+		}
 	
 		if(!mm.isPlaying(e.getPlayer()))
 		{
@@ -136,6 +160,67 @@ public class BlockDamage implements Listener
 			{
 				e.setCancelled(true);
 			}
+		}
+	}
+	
+	@EventHandler
+	public void onInteract(PlayerInteractEvent e)
+	{
+		Player player = e.getPlayer();
+		
+		Match game = mm.getMatch();
+		if(game == null) return;
+		
+		if(e.getPlayer().hasPermission("ultragames.block.place"))
+		{
+			return;
+		}
+		
+		if(!mm.isPlaying(player))
+		{
+			e.setCancelled(true);
+		}
+	}
+	
+	@EventHandler
+	public void onIgnite(BlockIgniteEvent e)
+	{
+		Player player = e.getPlayer();
+		
+		Match game = mm.getMatch();
+		if(game == null) return;
+		
+		if(e.getPlayer().hasPermission("ultragames.block.place"))
+		{
+			return;
+		}
+		
+		if(!mm.isPlaying(player))
+		{
+			e.setCancelled(true);
+		}
+	}
+	
+	@EventHandler
+	public void onPigZap(PigZapEvent e)
+	{
+		e.setCancelled(true);
+	}
+	
+	@EventHandler
+	public void onCreature(CreatureSpawnEvent e)
+	{
+		e.setCancelled(true);
+	}
+	
+	@EventHandler
+	public void onPickup(PlayerPickupItemEvent e) 
+	{
+		Match game = mm.getMatch();
+		if(game == null) return;
+		if(!mm.isPlaying(e.getPlayer()))
+		{
+			e.setCancelled(true);
 		}
 	}
 }

@@ -101,7 +101,7 @@ public class MatchManager implements Listener
 	
 	public void setState(MatchState matchState)
 	{
-		Bukkit.broadcastMessage(ChatColor.GRAY + "MatchState]: " + this.state.name() + " => " + matchState.name());
+		//Bukkit.broadcastMessage(ChatColor.GRAY + "MatchState]: " + this.state.name() + " => " + matchState.name());
 		MatchStateChangeEvent event = new MatchStateChangeEvent(matchState, this.state);
 		Bukkit.getPluginManager().callEvent(event);
 		
@@ -403,6 +403,11 @@ public class MatchManager implements Listener
 		player.teleport(world.getSpawnLocation());
 		this.addSpectator(player);
 		player.sendMessage(ChatColor.BOLD + "You are in spectator mode do /join to join the game!");
+		
+		if(this.getMatch() != null)
+		{
+			player.setScoreboard(this.getMatch().getScoreboard().getScoreboard());
+		}
 	}
 	
 	@EventHandler
@@ -498,6 +503,10 @@ public class MatchManager implements Listener
 						org.bukkit.scoreboard.Team bukkitTeam = this.match.getScoreboard().getScoreboard().registerNewTeam(team.getName());
 						bukkitTeam.setPrefix(team.getPrefix().toString());
 						team.setBukkitTeam(bukkitTeam);
+					}
+					for(Player player : Bukkit.getOnlinePlayers())
+					{
+						player.setScoreboard(this.match.getScoreboard().getScoreboard());
 					}
 				}
 				break;
