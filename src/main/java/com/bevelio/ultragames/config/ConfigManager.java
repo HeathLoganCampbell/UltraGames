@@ -98,6 +98,10 @@ public class ConfigManager
 	public List<Objective> loadObjectives(ConfigurationSection config)
 	{
 		List<Objective> objectives = new ArrayList<>();
+		if(!config.isConfigurationSection("Objectives"))
+		{
+			return objectives;
+		}
 		
 		for (String objectiveName : config.getConfigurationSection("Objectives").getKeys(false)) 
 		{

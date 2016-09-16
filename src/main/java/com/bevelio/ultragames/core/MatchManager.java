@@ -325,7 +325,7 @@ public class MatchManager implements Listener
 	
 	public void leaveAllTeams(Player player)
 	{
-		for(Team team : this.match.getAllTeam())
+		for(Team team : this.match.getAllTeams())
 		{
 			if(team.isMember(player.getUniqueId()))
 			{
@@ -498,7 +498,7 @@ public class MatchManager implements Listener
 					this.match.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard().registerNewObjective(this.match.getWorldData().gameType + MathUtils.getRandom(9999), "dummy"));
 					this.match.getScoreboard().setDisplaySlot(DisplaySlot.SIDEBAR);
 					this.match.start();
-					for(Team team : this.match.getAllTeam())
+					for(Team team : this.match.getAllTeams())
 					{
 						org.bukkit.scoreboard.Team bukkitTeam = this.match.getScoreboard().getScoreboard().registerNewTeam(team.getName());
 						bukkitTeam.setPrefix(team.getPrefix().toString());

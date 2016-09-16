@@ -165,7 +165,7 @@ public class Match implements Listener
 		this.teams.put(team.getName().toLowerCase(), team);
 	}
 	
-	public Collection<Team> getAllTeam()
+	public Collection<Team> getAllTeams()
 	{
 		return this.teams.values();
 	}
@@ -177,7 +177,7 @@ public class Match implements Listener
 	
 	public Team getTeam(Player player)
 	{
-		for(Team team : this.getAllTeam())
+		for(Team team : this.getAllTeams())
 		{
 			if(team.isMember(player.getUniqueId()))
 			{
@@ -190,7 +190,7 @@ public class Match implements Listener
 	public Team selectTeam(Team prefrenceTeam)
 	{
 		Team bestTeam = null;
-		for(Team team : this.getAllTeam())
+		for(Team team : this.getAllTeams())
 		{
 			if(bestTeam == null
 					|| team.size() < bestTeam.size())

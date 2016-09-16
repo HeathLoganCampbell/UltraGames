@@ -1,6 +1,8 @@
 package com.bevelio.ultragames.games.tdm;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
@@ -29,7 +31,7 @@ public class TDM extends Match
 	{
 		Team bestTeam = null;
 		int bestTeamDeaths = 9999;
-		for(Team team : this.getAllTeam())
+		for(Team team : this.getAllTeams())
 		{
 			int deaths = this.getTeamDeaths(team.getName());
 			
@@ -50,7 +52,7 @@ public class TDM extends Match
 			this.getScoreboard().getScoreboard().resetScores(entry);
 		}
 		
-		for(Team team : this.getAllTeam())
+		for(Team team : this.getAllTeams())
 		{
 			this.getScoreboard().getScore(team.getPrefix() + team.getName()).setScore(getTeamDeaths(team.getName()));
 		}
@@ -64,6 +66,12 @@ public class TDM extends Match
 			return 0;
 		}
 		return deaths;
+	}
+	
+	@Override
+	public List<Team> getRemainingTeams()
+	{
+		return new ArrayList<Team>(this.getAllTeams());
 	}
 	
 	@EventHandler

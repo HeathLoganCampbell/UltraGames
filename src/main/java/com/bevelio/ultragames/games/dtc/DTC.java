@@ -43,7 +43,7 @@ public class DTC extends Match
 			this.getScoreboard().getScoreboard().resetScores(entry);
 		}
 		
-		Iterator<Team> itTeam = this.getAllTeam().iterator();
+		Iterator<Team> itTeam = this.getAllTeams().iterator();
 		int i = 15;
 		while(itTeam.hasNext())
 		{
