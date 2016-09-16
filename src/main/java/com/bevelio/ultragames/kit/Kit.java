@@ -2,6 +2,7 @@ package com.bevelio.ultragames.kit;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 import org.bukkit.entity.Player;
@@ -17,6 +18,7 @@ public class Kit
 	private HashMap<Integer, ItemStack> items, armor;
 	private List<PotionEffect> effects;
 	private List<Perk> perks;
+	private HashSet<String> perkHash;
 	
 	public Kit(String name)
 	{
@@ -27,6 +29,7 @@ public class Kit
 		
 		this.effects = new ArrayList<>();
 		this.perks = new ArrayList<>();
+		this.perkHash = new HashSet<>();
 	}
 
 	public String getName()
@@ -62,11 +65,12 @@ public class Kit
 	public void addPerk(Perk perk)
 	{
 		this.perks.add(perk);
+		this.perkHash.add(perk.getName().toLowerCase());
 	}
 	
 	public boolean hasPerk(Perk perk)
 	{
-		return perk.getName().equalsIgnoreCase(perk.getName());
+		return this.perkHash.contains(perk.getName().toLowerCase());
 	}
 	
 	public void apply(Player player)

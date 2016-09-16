@@ -14,12 +14,13 @@
   
   <dependencies>	
     <!--Spigot API-->
-    <dependency>
-		<groupId>org.spigotmc</groupId>
-		<artifactId>spigot-api</artifactId>
-		<version>1.8.8-R0.1-SNAPSHOT</version>
-		<scope>provided</scope>
-    </dependency>
+    <!-- Spigot server api -->
+		<dependency>
+           <groupId>org.spigotmc</groupId>
+           <artifactId>spigot-api</artifactId>
+           <version>1.8-R0.1-SNAPSHOT</version>
+           <scope>provided</scope>
+    	</dependency>
     
 	<dependency>
 		<groupId>com.zaxxer</groupId>
@@ -27,8 +28,7 @@
 		<version>2.4.7</version>
     </dependency>
     
-    <!-- Spigot server -->
-	<dependency>
+  	<dependency>
     	<groupId>org.spigotmc</groupId>
 		<artifactId>spigot</artifactId>
     	<version>1.8.8-R0.1-SNAPSHOT</version>

@@ -3,7 +3,6 @@ package com.bevelio.ultragames.commons.damage;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import javax.annotation.Nonnull;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -201,7 +200,7 @@ public class CustomDamageEvent extends Event implements Cancellable {
 	    	this.damagerPlayer = ((Player)ent);
 	}
 
-	public void setDamaged(@Nonnull LivingEntity ent) {
+	public void setDamaged(LivingEntity ent) {
 		this.damagedEntity = ent;
 	    this.damagedPlayer = null;
 	    

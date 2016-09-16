@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -71,6 +72,7 @@ public class Match implements Listener
 				, 						creatureAllowForce = false;
 	
 	private HashMap<String, Kit>		kits;
+	private HashMap<UUID, String>		playerKits;
 	private HashMap<String, Team> 		teams;
 	private HashMap<String, Spawn>		spawns;
 	
@@ -80,6 +82,7 @@ public class Match implements Listener
 		this.description = description;
 		
 		this.kits = new HashMap<>();
+		this.playerKits = new HashMap<>();
 		this.teams = new HashMap<>();
 		this.spawns = new HashMap<>();
 	}
@@ -112,6 +115,18 @@ public class Match implements Listener
 	public Kit getKit(String name)
 	{
 		return this.kits.get(name.toLowerCase());
+	}
+	
+	public void setPlayersKit(UUID uuid, String kit)
+	{
+		this.playerKits.put(uuid, kit);
+	}
+	
+	public Kit getPlayersKit(UUID uuid)
+	{
+		String name = this.playerKits.get(uuid);
+		Kit kit = this.getKit(name);
+		return kit;
 	}
 	
 	public void startingAnnouncement()
@@ -214,7 +229,6 @@ public class Match implements Listener
 		}
 		player.eject();
 		String spawnName = team.getSpawnNames().get(0);
-		System.out.println("Spawn ]=> " + spawnName);
 		Spawn spawn = this.getSpawn(spawnName);
 		player.teleport(spawn.getSpawn());
 		PlayerUtils.reset(player, true);
@@ -242,7 +256,7 @@ public class Match implements Listener
 				player.sendMessage(ChatColor.GRAY + "Failed to apply kit " + team.getDefaultKit());
 				return;
 			}
-			
+			this.setPlayersKit(player.getUniqueId(), kit.getName());
 			kit.apply(player);
 		}
 		

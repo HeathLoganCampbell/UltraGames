@@ -198,10 +198,10 @@ public class MatchManager implements Listener
 		player.spigot().setCollidesWithEntities(false);
 		Bukkit.getOnlinePlayers().forEach(viewer ->
 		{
-			if(viewer != player && !this.spectators.contains(viewer.getUniqueId()))
-			{
+			if(viewer != player) return;
+			if(!this.spectators.contains(viewer.getUniqueId()))
 				viewer.hidePlayer(player);
-			}
+			player.showPlayer(viewer);
 		});
 	}
 	
