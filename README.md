@@ -2,6 +2,9 @@
 An arcadaic type minigame plugin for spigot and bukkit, Arcade, Cycling, minecraft, minigame, minigames like Mineplex, Overcast and Hypixel
 
 This is a PGM type plugin... but a bit different
+#Update
+This project has been moved to a spigot resource at https://www.spigotmc.org/resources/%E2%96%91-beveliosgames-%E2%96%91-multiple-gamemodes-beta.36196/
+
 
 ##Current Complete Games
 1. Destroy The Core
