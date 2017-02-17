@@ -3,7 +3,7 @@ An arcadaic type minigame plugin for spigot and bukkit, Arcade, Cycling, minecra
 
 This is a PGM type plugin... but a bit different
 #Update
-This project has been moved to a spigot resource at https://www.spigotmc.org/resources/%E2%96%91-beveliosgames-%E2%96%91-multiple-gamemodes-beta.36196/
+#This project has been moved to a spigot resource at https://www.spigotmc.org/resources/%E2%96%91-beveliosgames-%E2%96%91-multiple-gamemodes-beta.36196/ but feel free to download it as it is now
 
 
 ##Current Complete Games
