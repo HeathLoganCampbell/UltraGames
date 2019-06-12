@@ -1,6 +1,8 @@
 ## Archived
 A plugin I wrote for minecraft servers that allow players to play multiplayer team based games with special kits and abilities.
 
+The code isn't the best in the world, as I was just starting university at this time and I rushed for pushing more features than having clean code.
+
 # UltraGames
 An arcadaic type minigame plugin for spigot and bukkit, Arcade, Cycling, minecraft, minigame, minigames like Mineplex, Overcast and Hypixel
 
